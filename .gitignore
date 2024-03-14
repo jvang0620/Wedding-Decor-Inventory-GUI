@@ -1,0 +1,6 @@
+executableJarDirections.txt
+runAppCommands.txt
+bin
+.env
+MainApp.jar
+docs
