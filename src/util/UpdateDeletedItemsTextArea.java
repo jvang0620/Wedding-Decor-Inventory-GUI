@@ -30,8 +30,8 @@ public class UpdateDeletedItemsTextArea {
         StringBuilder sb = new StringBuilder();
 
         // Append title and separator
-        sb.append("  Deleted Items Report\n");
-        sb.append(" --------------------------------\n\n");
+        sb.append("  Deleted Items\n");
+        sb.append(" -------------------\n\n");
 
         // Group deleted items by type and sort alphabetically
         Map<String, List<InventoryItem>> deletedItemsByType = new TreeMap<>();

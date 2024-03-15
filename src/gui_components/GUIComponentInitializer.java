@@ -87,9 +87,9 @@ public class GUIComponentInitializer {
         /*
          * Button to view items in the trash
          */
-        JButton DeletedItemsButton = new JButton("Deleted Items");
+        JButton viewDeletedItemsButton = new JButton("View Deleted Items");
         // ActionListener for the "Deleted Items" button
-        DeletedItemsButton.addActionListener(new ActionListener() {
+        viewDeletedItemsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Read items from the deleted_items.csv file
@@ -863,11 +863,11 @@ public class GUIComponentInitializer {
         });
 
         /**
-         * Button to restore inventory
+         * Button to restore item
          */
-        JButton restoreInventoryButton = new JButton("Restore Inventory");
-        // ActionListener for the "Restore Inventory" button
-        restoreInventoryButton.addActionListener(new ActionListener() {
+        JButton restoreButton = new JButton("Restore");
+        // ActionListener for the "Restore Item" button
+        restoreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Update the text area with deleted items
@@ -1104,8 +1104,8 @@ public class GUIComponentInitializer {
         leftButtonPanel.add(exitButton);
 
         // Add buttons to the right button panel
-        rightButtonPanel.add(DeletedItemsButton);
-        rightButtonPanel.add(restoreInventoryButton);
+        rightButtonPanel.add(viewDeletedItemsButton);
+        rightButtonPanel.add(restoreButton);
         rightButtonPanel.add(permanentDeleteButton);
 
         // Text area to display inventory data
