@@ -34,7 +34,7 @@ Our Wedding Decor Inventory Management System offers a seamless experience with 
 
 `Permanently Delete`: In addition to the ability to delete inventory items, our system offers the option to permanently delete items from the database. This feature ensures that deleted items are completely removed from the system, freeing up space and optimizing database performance.
 
-`Restore Deleted Items`: Accidentally deleted an item? No problem! Our system allows you to restore deleted items, ensuring that no valuable data is lost.
+`Restore Items`: Accidentally deleted an item? No problem! Our system allows you to restore deleted items, ensuring that no valuable data is lost.
 
 `Confirmation Prompts`: Reduce the risk of accidental actions with confirmation prompts for critical operations such as generating reports or deleting items. This helps prevent unintended data loss or errors.
 
