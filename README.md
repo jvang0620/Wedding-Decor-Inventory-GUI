@@ -77,7 +77,7 @@ In addition to the core features, our Wedding Decor Inventory Management System 
 3. **User** can `update` an inventory item that have already been created. This automatically includes updating the inventory database (Inventory CSV).
 4. **User** can `delete` an inventory item that have already been created or edited. This automatically includes updating the inventory database (Inventory CSV).
 5. **User** can `generate` a report consisting of all the items in the inventory. Once the report is generated, user can also sort the report alphabetically, by item number or quantity.
-6. **User** can `view recently deleted` items from the deleted items CSV.
+6. **User** can `view deleted items` items from the deleted items CSV.
 7. **User** can `restore` a deleted items from the database (Deleted Items CSV). During restoration, user can restore one item from the deleted list or all items.
 8. **User** can `premanently delete` a deleted items from the database (Deleted Items CSV). During deletion, user can permanently delete one item from the deleted list or all items.
 9. **User** can `exit` the application.
