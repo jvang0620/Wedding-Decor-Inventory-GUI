@@ -1,7 +1,4 @@
-executableJarDirections.txt
-runAppCommands.txt
 bin
-.env
 docs
 jar
-WeddingInventoryApp.jar
+.env
