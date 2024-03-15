@@ -87,9 +87,9 @@ public class GUIComponentInitializer {
         /*
          * Button to view items in the trash
          */
-        JButton recentlyDeletedButton = new JButton("Recently Deleted");
-        // ActionListener for the "Recently Deleted" button
-        recentlyDeletedButton.addActionListener(new ActionListener() {
+        JButton DeletedItemsButton = new JButton("Deleted Items");
+        // ActionListener for the "Deleted Items" button
+        DeletedItemsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Read items from the deleted_items.csv file
@@ -1104,7 +1104,7 @@ public class GUIComponentInitializer {
         leftButtonPanel.add(exitButton);
 
         // Add buttons to the right button panel
-        rightButtonPanel.add(recentlyDeletedButton);
+        rightButtonPanel.add(DeletedItemsButton);
         rightButtonPanel.add(restoreInventoryButton);
         rightButtonPanel.add(permanentDeleteButton);
 

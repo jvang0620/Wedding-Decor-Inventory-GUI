@@ -13,16 +13,16 @@ import src.model.InventoryItem;
 public class UpdateDeletedItemsTextArea {
 
     /**
-     * Updates the text area with recently deleted items.
+     * Updates the text area with deleted items.
      * 
-     * Displays recently deleted items grouped by type and sorted alphabetically.
+     * Displays deleted items grouped by type and sorted alphabetically.
      * Only displays the first 35 characters of the item name, followed by "..." if
      * the name is longer.
      * Formats the creation date to display in the format "MM/dd/yy".
      * Sets the text of the deleted items text area to the generated report.
      * 
-     * @param deletedItems The list of InventoryItem objects representing recently
-     *                     deleted items.
+     * @param deletedItems The list of InventoryItem objects representing deleted
+     *                     items.
      */
     public static void populateTextArea(List<InventoryItem> deletedItems,
             JTextArea deletedInventoryTextArea) {
@@ -30,7 +30,7 @@ public class UpdateDeletedItemsTextArea {
         StringBuilder sb = new StringBuilder();
 
         // Append title and separator
-        sb.append(" Recently Deleted Report\n");
+        sb.append("  Deleted Items Report\n");
         sb.append(" --------------------------------\n\n");
 
         // Group deleted items by type and sort alphabetically
