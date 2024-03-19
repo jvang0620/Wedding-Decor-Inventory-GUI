@@ -8,9 +8,10 @@
 4. [Usage](#usage)
 5. [UML Diagram](#uml-diagram)
 6. [Class Diagram](#class-diagram)
-7. [Getting Started](#getting-started)
-8. [Developed Using](#developed-using)
-9. [Feedback](#feedback)
+7. [Activity Diagram](#activity-diagram)
+8. [Getting Started](#getting-started)
+9. [Developed Using](#developed-using)
+10. [Feedback](#feedback)
 
 ### Overview
 
@@ -118,37 +119,97 @@ In addition to the core features, our Wedding Decor Inventory Management System 
 
 - Additionally, there is an association relationship between Inventory Management System Frame and Inventory Item. This indicates that Inventory Management System Frame has a list of Inventory Item objects, representing the inventory data managed by the system.
 
+### Activity Diagram
+
+<div style="text-align: center;">
+    <img src="imgs/activity_diagram_pic_1.JPG" alt="UML-Diagram" width="800">
+</div>
+
+<div style="text-align: center;">
+    <img src="imgs/activity_diagram_pic_2.JPG" alt="UML-Diagram" width="800">
+</div>
+
+##### Written Descriptions:
+
+The activity diagram illustrates the sequence of actions and interactions within the Wedding Decors Inventory Management System. Here's a description of the diagram:
+
+1. **Start Application**:
+   - The application begins with the start state, initiating the process.
+2. **Main Menu Display**:
+   - Upon startup, the main menu is displayed, presenting various options to the user.
+3. **User Selects Option**:
+   - The user selects an option from the main menu, such as "View Inventory," "Create Inventory," "Update Inventory," "Delete Inventory," "Generate Report," "View Deleted Items," "Restore," "Permanently Delete," or "Exit Program."
+4. **View Inventory**:
+   - If the user selects the "`View Inventory`" option, the system proceeds to display the inventory items.
+5. **Create Inventory**:
+   - If the user selects the "`Create Inventory`" option, the system prompts the user to input details for a new inventory item.
+   - Input Details:
+     - The user inputs details such as the item name, quantity, item type, etc.
+     - The system processes the input and creates the new inventory item.
+6. **Update Inventory**:
+   - If the user selects the "`Update Inventory`" option, the system prompts the user to select an item from the inventory to update.
+   - Select Item:
+     - The user selects an item from the inventory to update.
+     - The system allows the user to modify the selected item's details.
+7. **Delete Inventory**:
+   - If the user selects the "`Delete Inventory`" option, the system prompts the user to select an item from the inventory to delete.
+   - Select Item:
+     - The user selects an item from the inventory to delete.
+     - The system confirms the deletion of the selected item.
+8. **Generate Report**:
+   - If the user selects the "`Generate Report`" option, the system proceeds to generate a report of the inventory items in CSV format.
+   - Report Generated:
+     - The system generates the report, which includes details such as item names, quantities, etc.
+9. **View Deleted Items**:
+   - If the user selects the "`View Deleted Items`" option, the system proceeds to display a list of recently deleted items.
+   - Display Deleted Items:
+     - The system displays the list of deleted items for the user to review.
+10. **Restore Item**:
+    - If the user selects the "`Restore`" option, the system prompts the user to select an item from the deleted items list to restore.
+    - Select Item::
+      - The user selects an item from the deleted items list to restore.
+      - The system restores the selected item to the inventory.
+11. **Permanently Delete**:
+    - If the user selects the "`Permanently Delete`" option, the system prompts the user to select an item from the deleted items list to permanently delete.
+    - Select Item::
+      - The user selects an item from the deleted items list to permanently delete.
+      - The system confirms the permanent deletion of the selected item.
+12. **Application Closed**:
+    - Finally, if the user selects the "`Exit Program`" option, the application is closed, terminating the process.
+
+This activity diagram provides a clear visualization of the user interactions and system responses within the Wedding Decors Inventory Management System, guiding users through various inventory management tasks and ensuring efficient operation of the application.
+
 ### Getting Started:
 
 1. Clone the repository to your local machine with one of the follow:
 
    HTTPS: <pre><code>git clone https://github.com/jvang0620/Wedding-Decor-Inventory-GUI</code></pre>
 
-2. **Compile**: Compile the Java source code using `javac -d bin MainApp.java` or `javac -d bin *.java`
+2. **Compile**: Compile the Java source code using `javac -d bin WeddingInventoryApp.java` or `javac -d bin *.java`
 
-   - The command `javac -d bin MainApp.java` is used to compile Java source files (.java) and then place the compiled class files (.class) into a specified directory (bin in this case). Let's break down what each part of the command does:
+   - The command `javac -d bin WeddingInventoryApp.java` is used to compile Java source files (.java) and then place the compiled class files (.class) into a specified directory (bin in this case). Let's break down what each part of the command does:
 
    - `javac`: This is the Java compiler command. It compiles Java source code files (.java) into bytecode files (.class) that can be executed by the Java Virtual Machine (JVM).
 
    - `-d bin`: This option specifies the destination directory for the compiled class files. In this case, it's set to bin, indicating that the compiled class files should be placed in the bin directory.
 
-   - `MainApp.java`: This is the Java source code file that you want to compile. In this case, it's assumed that MainApp.java contains the main class definition and possibly other classes used by your application.
+   - `WeddingInventoryApp.java`: This is the Java source code file that you want to compile. In this case, it's assumed that WeddingInventoryApp.java contains the main class definition and possibly other classes used by your application.
 
    - `*.java`: This part of the command is a wildcard pattern that matches all the Java source files (\_.java) in the current directory. It tells the compiler to compile all Java files in the current directory.
 
-So, when you run this command`, the Java compiler compiles all the Java files in the current directory and places the compiled class files into the bin directory. This is a common practice to organize compiled class files separately from the source code.
+So, when you run this command, the Java compiler compiles all the Java files in the current directory and places the compiled class files into the bin directory. This is a common practice to organize compiled class files separately from the source code.
 
-3. **Run**: Execute the compiled program with `java -cp bin MainApp`.
+3. **Run**: Execute the compiled program with `java -cp bin WeddingInventoryApp`.
 
-   - The command `java -cp bin MainApp` is used to run a Java program named WeddingInventorySystemGUI with its main class located in the bin directory. Let's break down what each part of the command does:
+   - The command `java -cp bin WeddingInventoryApp` is used to run a Java program named WeddingInventorySystemGUI with its main class located in the bin directory. Let's break down what each part of the command does:
 
    - `java`: This is the Java interpreter command. It is used to execute Java programs.
 
    - `-cp bin`: This option specifies the classpath, which tells Java where to look for the compiled class files (\*.class) needed to run the program. In this case, it's set to bin, indicating that Java should look for class files in the bin directory.
 
-   - `MainApp`: This is the name of the main class of the Java program that you want to run. When you execute this command, Java will look for a class file named WeddingInventorySystemGUI.class in the bin directory and execute its main method, which serves as the entry point of the program.
+   - `WeddingInventoryApp`: This is the name of the main class of the Java program that you want to run. When you execute this command, Java will look for a class file named WeddingInventorySystemGUI.class in the bin directory and execute its main method, which serves as the entry point of the program.
 
-So, when you run this command, Java will execute the WeddingInventorySystemGUI program using the compiled class files located in the bin directory.-
+So, when you run this command, Java will execute the WeddingInventorySystemGUI program using the compiled class files located in the bin directory.
 
 4. **Output**: A Graphical User Interface will appear on your desktop.
 
