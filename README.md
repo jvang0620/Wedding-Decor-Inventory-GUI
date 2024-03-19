@@ -1,5 +1,9 @@
 # Wedding Decors Inventory Management System
 
+<div style="text-align: center;">
+    <img src="imgs/GUI.jpg" alt="GUI" width="800">
+</div>
+
 ### Table of Contents
 
 1. [Overview](#overview)
@@ -212,10 +216,6 @@ So, when you run this command, the Java compiler compiles all the Java files in 
 So, when you run this command, Java will execute the WeddingInventorySystemGUI program using the compiled class files located in the bin directory.
 
 4. **Output**: A Graphical User Interface will appear on your desktop.
-
-<div style="text-align: center;">
-    <img src="imgs/GUI.jpg" alt="GUI" width="800">
-</div>
 
 Happy Coding!
 
