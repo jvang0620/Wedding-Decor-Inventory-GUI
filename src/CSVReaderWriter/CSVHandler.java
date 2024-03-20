@@ -181,8 +181,22 @@ public class CSVHandler {
      */
     public static List<InventoryItem> readItemsFromDeletedCSVFile() {
         List<InventoryItem> items = new ArrayList<>();
+
+        // Create a File object representing the CSV file
+        File file = new File(DELETED_ITEMS_CSV_FILE_PATH);
+
+        // If the file does not exist, return an empty list
+        if (!file.exists()) {
+            return items;
+        }
+
+        // If the file exists, read from it
         try (BufferedReader reader = new BufferedReader(new FileReader(DELETED_ITEMS_CSV_FILE_PATH))) {
+
+            // Create a BufferedReader to read from the file
             String line;
+
+            // Read each line from the file
             while ((line = reader.readLine()) != null) {
                 // Split the CSV line by comma and create an InventoryItem object
                 String[] parts = line.split(",");
@@ -216,9 +230,24 @@ public class CSVHandler {
      */
     public static List<InventoryItem> readItemsFromInventoryCSVFile() {
         List<InventoryItem> items = new ArrayList<>();
+
+        // Create a File object representing the CSV file
+        File file = new File(INVENTORY_CSV_FILE_PATH);
+
+        // If the file does not exist, return an empty list
+        if (!file.exists()) {
+            return items;
+        }
+
+        // If the file exists, read from it
         try (BufferedReader reader = new BufferedReader(new FileReader(INVENTORY_CSV_FILE_PATH))) {
+
+            // Create a BufferedReader to read from the file
             String line;
+
+            // Read each line from the file
             while ((line = reader.readLine()) != null) {
+
                 // Split the CSV line by comma and create an InventoryItem object
                 String[] parts = line.split(",");
 

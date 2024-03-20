@@ -95,8 +95,15 @@ public class GUIComponentInitializer {
                 // Read items from the deleted_items.csv file
                 List<InventoryItem> trashItems = CSVHandler.readItemsFromDeletedCSVFile();
 
-                // Update the text area with deleted items
-                UpdateDeletedItemsTextArea.populateTextArea(trashItems, deletedInventoryTextArea);
+                // Check if the list of deleted items is empty
+                if (trashItems.isEmpty()) {
+                    // If there are no items to display, show a message to the user
+                    JOptionPane.showMessageDialog(null, "No deleted items found.", "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    // Update the text area with deleted items
+                    UpdateDeletedItemsTextArea.populateTextArea(trashItems, deletedInventoryTextArea);
+                }
             }
         });
 
@@ -706,16 +713,18 @@ public class GUIComponentInitializer {
         permanentDeleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Update the text area with deleted items
+                // Read from deleted item csv file and set to list
                 List<InventoryItem> deletedItemsList = CSVHandler.readItemsFromDeletedCSVFile();
-                UpdateDeletedItemsTextArea.populateTextArea(deletedItemsList, deletedInventoryTextArea);
 
-                // Check if there are items to delete
+                // Check if there are items to delete, exit method
                 if (deletedItemsList.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Nothing to Permanently Delete", "Info",
                             JOptionPane.INFORMATION_MESSAGE);
-                    return; // Exit the method
+                    return;
                 }
+
+                // Update the text area with deleted items
+                UpdateDeletedItemsTextArea.populateTextArea(deletedItemsList, deletedInventoryTextArea);
 
                 // Prompt the user to choose between deleting one item, all items, or cancel
                 Object[] options = { "One Item", "All Items", "Cancel" };
@@ -870,15 +879,18 @@ public class GUIComponentInitializer {
         restoreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Update the text area with deleted items
+                // Read from deleted item csv file and set to list
                 List<InventoryItem> deletedItemsList = CSVHandler.readItemsFromDeletedCSVFile();
-                UpdateDeletedItemsTextArea.populateTextArea(deletedItemsList, deletedInventoryTextArea);
+
                 // Check if there are items to restore
                 if (deletedItemsList.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "No Items to Restore", "Info",
                             JOptionPane.INFORMATION_MESSAGE);
                     return; // Exit the method
                 }
+
+                // Update the text area with deleted items
+                UpdateDeletedItemsTextArea.populateTextArea(deletedItemsList, deletedInventoryTextArea);
 
                 // Prompt the user to choose between restoring one item, all items, or cancel
                 Object[] options = { "Restore One Item", "Restore All Items", "Cancel" };
@@ -1024,6 +1036,13 @@ public class GUIComponentInitializer {
         generateReportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // check if the list is empty, exit method
+                if (inventoryItemsList.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No items to generate report for!", "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
 
                 // Update inventory text area to display current inventory
                 UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
