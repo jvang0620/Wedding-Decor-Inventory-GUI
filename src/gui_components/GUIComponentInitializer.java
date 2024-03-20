@@ -79,6 +79,14 @@ public class GUIComponentInitializer {
         viewInventoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // check if list is empty, if so, display message and exit method
+                if (inventoryItemsList.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "There are no items in the inventory to display.", "No Items",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
                 // Update inventory text area to display current inventory
                 UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
             }

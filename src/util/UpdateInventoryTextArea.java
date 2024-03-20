@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 import src.model.InventoryItem;
@@ -24,14 +23,6 @@ public class UpdateInventoryTextArea {
     public static void reloadTextArea(List<InventoryItem> inventoryItemsList, JTextArea inventoryTextArea) {
         // Initialize StringBuilder to store the inventory text
         StringBuilder sb = new StringBuilder();
-
-        // Check if the list is empty, display a message to the user and exit method
-        if (inventoryItemsList.isEmpty()) {
-
-            JOptionPane.showMessageDialog(null, "There are no items in the inventory to display.", "No Items",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
 
         // Append title and separator
         sb.append(" Inventory Report\n");
