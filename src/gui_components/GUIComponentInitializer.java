@@ -82,7 +82,7 @@ public class GUIComponentInitializer {
             public void actionPerformed(ActionEvent e) {
 
                 // Validate the list of inventory items to see if it is empty
-                DataValidator.isValidateInventoryItemsList(inventoryItemsList);
+                DataValidator.validateInventoryItemsList(inventoryItemsList);
 
                 // Update inventory text area to display current inventory
                 UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
@@ -101,7 +101,7 @@ public class GUIComponentInitializer {
                 List<InventoryItem> trashItems = CSVHandler.readItemsFromDeletedCSVFile();
 
                 // Validate the list of deleted items to see if empty, update the text area
-                DataValidator.isValidateDeletedItemsList(trashItems);
+                DataValidator.validateDeletedItemsList(trashItems);
 
                 // Update the text area with deleted items
                 UpdateDeletedItemsTextArea.populateTextArea(trashItems, deletedInventoryTextArea);

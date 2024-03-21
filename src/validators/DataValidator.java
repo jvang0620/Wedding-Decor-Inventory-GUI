@@ -7,7 +7,7 @@ import src.model.InventoryItem;
 public class DataValidator {
 
     // Method to validate the list of inventory items
-    public static void isValidateInventoryItemsList(List<InventoryItem> inventoryItemsList) {
+    public static void validateInventoryItemsList(List<InventoryItem> inventoryItemsList) {
 
         // check if list is empty, if so, display message and exit method
         if (inventoryItemsList.isEmpty()) {
@@ -21,7 +21,7 @@ public class DataValidator {
     }
 
     // Method to validate the list of deleted items
-    public static void isValidateDeletedItemsList(List<InventoryItem> deletedItems) {
+    public static void validateDeletedItemsList(List<InventoryItem> deletedItems) {
 
         // check if list is empthy, if so, display messages and exit method
         if (deletedItems.isEmpty()) {
