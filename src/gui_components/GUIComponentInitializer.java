@@ -297,20 +297,20 @@ public class GUIComponentInitializer {
                                         "Enter new value for Item Number:",
                                         selectedItem.getItemNumber());
 
-                                // Validate if user clicked cancel or closed the dialog
-                                if (DataValidator.isInputNull(newItemNumberStr)) {
-                                    return; // Exit method if validation passes
-                                }
-
-                                // Trim and normalize whitespace in the newItemNumberStr
-                                newItemNumberStr = newItemNumberStr.replaceAll("\\s+", " ").trim();
-
-                                // Validate the user input is not empty and contains valid characters
-                                if (!DataValidatorForUpdate.isValidItemNumberForUpdate(newItemNumberStr)) {
-                                    return; // Exit method if validation fails
-                                }
-
                                 try {
+                                    // Validate if user clicked cancel or closed the dialog, if so, exit method
+                                    if (DataValidator.isInputNull(newItemNumberStr)) {
+                                        return;
+                                    }
+
+                                    // Trim and normalize whitespace in the newItemNumberStr
+                                    newItemNumberStr = newItemNumberStr.replaceAll("\\s+", " ").trim();
+
+                                    // Validate the user input is not empty and contains valid characters
+                                    if (!DataValidatorForUpdate.isValidItemNumberForUpdate(newItemNumberStr)) {
+                                        return; // Exit method if validation fails
+                                    }
+
                                     // Parse the new item number
                                     int newUpdatedItemNumber = Integer.parseInt(newItemNumberStr);
 
@@ -338,9 +338,7 @@ public class GUIComponentInitializer {
 
                                 } catch (NumberFormatException ex) {
                                     JOptionPane.showMessageDialog(null,
-                                            "Invalid entry!",
-                                            "Error",
-                                            JOptionPane.ERROR_MESSAGE);
+                                            "Invalid entry!", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
 
                                 break;
@@ -356,30 +354,23 @@ public class GUIComponentInitializer {
                                         JOptionPane.QUESTION_MESSAGE, null, currentTypes,
                                         selectedItem.getItemType());
                                 try {
-                                    // Check if user clicked cancel or closed the dialog
-                                    if (newType == null) {
-                                        return; // Exit method
+                                    // Check if user clicked cancel or closed the dialog, if so, exit method
+                                    if (DataValidator.isInputNull(newType)) {
+                                        return;
                                     }
 
-                                    // Check if the new item type is the same as the current one
-                                    if (newType.equals(selectedItem.getItemType())) {
-                                        JOptionPane.showMessageDialog(null,
-                                                "New item type matches the current item type.",
-                                                "No Change Detected",
-                                                JOptionPane.INFORMATION_MESSAGE);
+                                    // Checks if the new updated item type is the same as the current item type
+                                    if (DataValidatorForUpdate.isSameItemType(selectedItem, newType)) {
                                         return; // Exit method
                                     }
 
                                     // Show confirmation dialog for the update
                                     PromptForUpdateConfirmation.showUpdateConfirmationDialog(selectedItem,
-                                            selectedOption,
-                                            newType,
-                                            inventoryItemsList, inventoryTextArea);
+                                            selectedOption, newType, inventoryItemsList, inventoryTextArea);
+
                                 } catch (NumberFormatException ex) {
                                     JOptionPane.showMessageDialog(null,
-                                            "Invalid entry!",
-                                            "Error",
-                                            JOptionPane.ERROR_MESSAGE);
+                                            "Invalid entry!", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
                                 break;
 
@@ -389,47 +380,34 @@ public class GUIComponentInitializer {
                                         "Enter new value for Item Name:",
                                         selectedItem.getItemName());
                                 try {
-                                    // Check if user clicked cancel or closed the dialog
-                                    if (newUpdatedItemName == null) {
-                                        return; // Exit method
+
+                                    // Check if user clicked cancel or closed the dialog, if so, exit method
+                                    if (DataValidator.isInputNull(newUpdatedItemName)) {
+                                        return;
                                     }
 
                                     // Trim and normalize whitespace in the newUpdatedItemName
                                     newUpdatedItemName = newUpdatedItemName.replaceAll("\\s+", " ").trim();
 
-                                    // Check if empty
-                                    if (newUpdatedItemName.isEmpty()) {
-                                        // Show an error message if the new item name is empty
-                                        JOptionPane.showMessageDialog(null,
-                                                "Item Name cannot be empty!",
-                                                "Error",
-                                                JOptionPane.ERROR_MESSAGE);
-                                        return; // Exit method
+                                    // Validate the user input is not empty, if so, exit method
+                                    if (DataValidatorForUpdate.isUpdatedItemNameEmpty(newUpdatedItemName)) {
+                                        return;
                                     }
 
-                                    // Check if the new updated item name is the same as the current one
-                                    if (newUpdatedItemName.equals(selectedItem.getItemName())) {
-                                        JOptionPane.showMessageDialog(null,
-                                                "New item name matches the current item name.",
-                                                "No Change Detected",
-                                                JOptionPane.INFORMATION_MESSAGE);
-                                        return; // Exit method
+                                    // Check if the new updated item name is the same as the current item name
+                                    if (DataValidatorForUpdate.isSameItemName(selectedItem, newUpdatedItemName)) {
+                                        return; // If so, exit method
                                     }
 
-                                    // Ensure new updated item name contains only valid characters (A-Z, a-z. (0-9))
-                                    if (!newUpdatedItemName.matches("[a-zA-Z0-9\\s]+")) {
-                                        // Show error message if the item name contains invalid characters
-                                        JOptionPane.showMessageDialog(null,
-                                                "Invalid characters in item name! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
-                                                "Error",
-                                                JOptionPane.ERROR_MESSAGE);
-                                        return; // Exit method
+                                    // Validate if the new updated item name contains only valid characters
+                                    if (!DataValidatorForUpdate.isValidItemName(newUpdatedItemName)) {
+                                        return; // If so, exit method
                                     }
 
                                     // Show confirmation dialog for the update
                                     PromptForUpdateConfirmation.showUpdateConfirmationDialog(selectedItem,
-                                            selectedOption,
-                                            newUpdatedItemName, inventoryItemsList, inventoryTextArea);
+                                            selectedOption, newUpdatedItemName, inventoryItemsList, inventoryTextArea);
+
                                 } catch (NumberFormatException ex) {
                                     JOptionPane.showMessageDialog(null,
                                             "Invalid entry!",

@@ -1,11 +1,9 @@
 package src.validators;
 
 import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import src.model.InventoryItem;
-import src.util.ValidatingItemNumber;
 
 public class DataValidatorForUpdate {
 
@@ -49,7 +47,7 @@ public class DataValidatorForUpdate {
             return false; // Validation failed
         }
 
-        return true; // Validation passed
+        return true; // Exit method
     }
 
     /**
@@ -150,9 +148,9 @@ public class DataValidatorForUpdate {
                     "New item number matches the current item number.",
                     "No Change Detected",
                     JOptionPane.INFORMATION_MESSAGE);
-            return true; // Exit the update
+            return true; // Exit method
         } else {
-            return false; // Continue with the update
+            return false; // Continue method
         }
     }
 
@@ -173,4 +171,84 @@ public class DataValidatorForUpdate {
         }
         return false; // Continue method
     }
+
+    /**
+     * Checks if the new updated item type is the same as the current item type
+     * 
+     * @param selectedItem The selected item to be updated
+     * @param newType      The new updated item type
+     */
+    public static boolean isSameItemType(InventoryItem selectedItem, String newType) {
+        if (newType.equals(selectedItem.getItemType())) {
+            JOptionPane.showMessageDialog(null,
+                    "New item type matches the current item type.",
+                    "No Change Detected",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return true; // Exit method
+        } else {
+            return false; // Continue method
+        }
+    }
+
+    /**
+     * Checks if the new updated item name is empty
+     * 
+     * @param newUpdatedItemName The new updated item name
+     * @return True if the new updated item name is empty, otherwise false.
+     */
+    public static boolean isUpdatedItemNameEmpty(String newUpdatedItemName) {
+        if (newUpdatedItemName.isEmpty()) {
+            // Show an error message if the new item name is empty
+            JOptionPane.showMessageDialog(null,
+                    "Item Name cannot be empty!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return true; // Exit method
+        } else {
+            return false; // Continue method
+        }
+    }
+
+    /**
+     * Checks if the new updated item name is the same as the current item name
+     * 
+     * @param selectedItem       The selected item to be updated
+     * @param newUpdatedItemName The new updated item name
+     * @return True if the new updated item name is the same as the current one,
+     *         otherwise false.
+     */
+    public static boolean isSameItemName(InventoryItem selectedItem, String newUpdatedItemName) {
+        if (newUpdatedItemName.equals(selectedItem.getItemName())) {
+            JOptionPane.showMessageDialog(null,
+                    "New item name matches the current item name.",
+                    "No Change Detected",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return true; // Exit method
+        } else {
+            return false; // Continue method
+        }
+    }
+
+    /**
+     * Checks if the new updated item name contains only valid characters (A-Z, a-z.
+     * (0-9))
+     * 
+     * @param newUpdatedItemName The new updated item name
+     * @return True if the new updated item name contains only valid characters,
+     *         otherwise false
+     */
+    public static boolean isValidItemName(String newUpdatedItemName) {
+        // Ensure input contains only valid characters (A-Z, a-z. (0-9))
+        if (!newUpdatedItemName.matches("[a-zA-Z0-9\\s]+")) {
+            // Show error message if the item name contains invalid characters
+            JOptionPane.showMessageDialog(null,
+                    "Invalid characters in item name! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Exit method
+        } else {
+            return true; // Continue method
+        }
+    }
+
 }
