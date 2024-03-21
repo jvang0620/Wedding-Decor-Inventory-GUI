@@ -44,7 +44,7 @@ public class DataValidator {
     }
 
     // Method to validate the user input
-    public static boolean isValidStringInput(String input) {
+    public static boolean isValidItemNumberForCreate(String input) {
 
         // Check if empty
         if (input.isEmpty()) {
@@ -105,5 +105,18 @@ public class DataValidator {
             return false; // // Validation failed
         }
         return true; // Validation passed
+    }
+
+    // Method to validate the user input for the item number
+    public static boolean isItemNumberFound(InventoryItem selectedItem, int itemNumberToUpdate) {
+        // If the item number does not exist
+        if (selectedItem == null) {
+            JOptionPane.showMessageDialog(null, "Item number " + itemNumberToUpdate + " does not exist",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Exit fails
+        } else {
+            return true; // Validation passed
+        }
     }
 }

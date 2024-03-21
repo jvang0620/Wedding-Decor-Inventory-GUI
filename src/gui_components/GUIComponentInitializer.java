@@ -25,6 +25,7 @@ import src.util.UpdateDeletedItemsTextArea;
 import src.util.UpdateInventoryTextArea;
 import src.util.ValidatingItemNumber;
 import src.validators.DataValidator;
+import src.validators.DataValidatorForUpdate;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -134,7 +135,7 @@ public class GUIComponentInitializer {
                 itemName = itemName.replaceAll("\\s+", " ").trim();
 
                 // Validate the user input is not empty and contains valid characters
-                if (!DataValidator.isValidStringInput(itemName)) {
+                if (!DataValidator.isValidItemNumberForCreate(itemName)) {
                     return; // Exit method if validation fails
                 }
 
@@ -233,11 +234,9 @@ public class GUIComponentInitializer {
                 // Read from inventory csv file
                 List<InventoryItem> list = CSVHandler.readItemsFromInventoryCSVFile();
 
-                // Check if there are items to update
-                if (list.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No Items to Update", "Info",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return; // Exit the method
+                // Check if the list is empty, if so, exit method
+                if (!DataValidatorForUpdate.validateUpdatedItemsList(list)) {
+                    return;
                 }
 
                 // Update inventory text area to display current inventory
@@ -246,30 +245,17 @@ public class GUIComponentInitializer {
                 // Prompt user to enter the item number for the item to be updated
                 String itemNumberStr = JOptionPane.showInputDialog(null, "Enter Item Number to Update:");
 
-                // Check if user clicked cancel or closed the dialog
-                if (itemNumberStr == null) {
-                    return; // Exit Method
+                // Check if user clicked cancel or closed the dialog, if so, exit method
+                if (DataValidator.isInputNull(itemNumberStr)) {
+                    return;
                 }
 
                 // Trim and normalize whitespace in the item Number String
                 itemNumberStr = itemNumberStr.replaceAll("\\s+", " ").trim();
 
-                // Check if empty
-                if (itemNumberStr.isEmpty()) {
-                    // Show an error message if the new item name is empty
-                    JOptionPane.showMessageDialog(null,
-                            "Item Number cannot be empty!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Exit mthod
-                }
-
-                // Check if the quantity contains only digits
-                if (!itemNumberStr.matches("\\d+")) {
-                    // Show an error message if the new quantity contains invalid characters
-                    JOptionPane.showMessageDialog(null,
-                            "Quantity must contain only numbers!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Exit method
+                // Validate the user input is not empty and contains valid characters
+                if (!DataValidatorForUpdate.isValidItemNumberForUpdate(itemNumberStr)) {
+                    return; // Exit method if validation fails
                 }
 
                 try {
@@ -279,7 +265,7 @@ public class GUIComponentInitializer {
                     // Create variable
                     InventoryItem selectedItem = null;
 
-                    // Find the item to update based on the entered item number
+                    // Iterate thorugh list and find the item to update, if not found, exit loops
                     for (InventoryItem item : inventoryItemsList) {
                         if (item.getItemNumber() == itemNumberToUpdate) {
                             selectedItem = item;
@@ -287,16 +273,16 @@ public class GUIComponentInitializer {
                         }
                     }
 
-                    // If the item number does not exist
-                    if (selectedItem == null) {
-                        JOptionPane.showMessageDialog(null, "Item number " + itemNumberToUpdate + " does not exist",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return; // Exit method
+                    // Check if the item number exists
+                    // If not, exit the method
+                    if (!DataValidator.isItemNumberFound(selectedItem, itemNumberToUpdate)) {
+                        return;
                     }
 
                     // Display a dialog to select the field to update
                     String[] updateOptions = { "Item Number", "Item Type", "Item Name", "Quantity" };
+
+                    // Prompt user to select a field to update
                     String selectedOption = (String) JOptionPane.showInputDialog(null,
                             "Select which field to update:",
                             "Update Item", JOptionPane.QUESTION_MESSAGE, null, updateOptions,
