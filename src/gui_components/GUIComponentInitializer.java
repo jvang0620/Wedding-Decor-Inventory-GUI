@@ -100,15 +100,11 @@ public class GUIComponentInitializer {
                 // Read items from the deleted_items.csv file
                 List<InventoryItem> trashItems = CSVHandler.readItemsFromDeletedCSVFile();
 
-                // Check if the list of deleted items is empty
-                if (trashItems.isEmpty()) {
-                    // If there are no items to display, show a message to the user
-                    JOptionPane.showMessageDialog(null, "No deleted items found.", "Information",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    // Update the text area with deleted items
-                    UpdateDeletedItemsTextArea.populateTextArea(trashItems, deletedInventoryTextArea);
-                }
+                // Validate the list of deleted items to see if empty, update the text area
+                DataValidator.validateDeletedItemsList(trashItems);
+
+                // Update the text area with deleted items
+                UpdateDeletedItemsTextArea.populateTextArea(trashItems, deletedInventoryTextArea);
             }
         });
 
