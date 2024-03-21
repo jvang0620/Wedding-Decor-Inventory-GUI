@@ -273,7 +273,7 @@ public class GUIComponentInitializer {
                         }
                     }
 
-                    // Check if the item number exists
+                    // Validate if the item number exists
                     // If not, exit the method
                     if (!DataValidator.isItemNumberFound(selectedItem, itemNumberToUpdate)) {
                         return;
@@ -297,66 +297,44 @@ public class GUIComponentInitializer {
                                         "Enter new value for Item Number:",
                                         selectedItem.getItemNumber());
 
-                                // Check if user clicked cancel or closed the dialog
-                                if (newItemNumberStr == null) {
-                                    return; // Exit method
+                                // Validate if user clicked cancel or closed the dialog
+                                if (DataValidator.isInputNull(newItemNumberStr)) {
+                                    return; // Exit method if validation passes
                                 }
 
                                 // Trim and normalize whitespace in the newItemNumberStr
                                 newItemNumberStr = newItemNumberStr.replaceAll("\\s+", " ").trim();
 
-                                // Check if empty
-                                if (newItemNumberStr.isEmpty()) {
-                                    // Show an error message if the new item name is empty
-                                    JOptionPane.showMessageDialog(null,
-                                            "Item Name cannot be empty!",
-                                            "Error", JOptionPane.ERROR_MESSAGE);
-                                    return; // Exit method
+                                // Validate the user input is not empty and contains valid characters
+                                if (!DataValidatorForUpdate.isValidItemNumberForUpdate(newItemNumberStr)) {
+                                    return; // Exit method if validation fails
                                 }
 
                                 try {
                                     // Parse the new item number
-                                    int newItemNumber = Integer.parseInt(newItemNumberStr);
+                                    int newUpdatedItemNumber = Integer.parseInt(newItemNumberStr);
 
-                                    // Validate the new item number based on item type
-                                    if (!ValidatingItemNumber.isValidItemNumber(selectedItem.getItemType(),
-                                            newItemNumber)) {
-                                        JOptionPane.showMessageDialog(null,
-                                                "Invalid item number for the selected item type! " +
-                                                        "The item number for '"
-                                                        + selectedItem.getItemType()
-                                                        + "' must be between " +
-                                                        ValidatingItemNumber.validateItemNumberRange(
-                                                                selectedItem.getItemType())
-                                                        + ".",
-                                                "Error", JOptionPane.ERROR_MESSAGE);
-
-                                        return; // Exit method
+                                    // Validate that the new updated item number is valid
+                                    if (!DataValidatorForUpdate.isValidItemNumber(selectedItem.getItemType(),
+                                            newUpdatedItemNumber)) {
+                                        return; // Exit method if validation fails
                                     }
 
-                                    // Check if the new item number is the same as the current one
-                                    if (newItemNumber == selectedItem.getItemNumber()) {
-                                        JOptionPane.showMessageDialog(null,
-                                                "New item number matches the current item number.",
-                                                "No Change Detected",
-                                                JOptionPane.INFORMATION_MESSAGE);
-                                        return; // Exit method
+                                    // Validate if the new updated item number is a duplicate
+                                    if (DataValidatorForUpdate.isDuplicateItemNumber(selectedItem,
+                                            newUpdatedItemNumber)) {
+                                        return; // Exit method if validation passes
                                     }
 
-                                    // Check if the new item number already exists
-                                    for (InventoryItem item : inventoryItemsList) {
-                                        if (item.getItemNumber() == newItemNumber) {
-                                            JOptionPane.showMessageDialog(null,
-                                                    "The entered item number already exists!",
-                                                    "Error", JOptionPane.ERROR_MESSAGE);
-                                            return; // Exit method
-                                        }
+                                    // Validate if the new updated item number is an existing item number
+                                    if (DataValidatorForUpdate.isExistingItemNumber(itemsList, newUpdatedItemNumber)) {
+                                        return; // Exit method if validation passes
                                     }
 
                                     // Show confirmation dialog for the update
                                     PromptForUpdateConfirmation.showUpdateConfirmationDialog(selectedItem,
                                             selectedOption,
-                                            newItemNumber, inventoryItemsList, inventoryTextArea);
+                                            newUpdatedItemNumber, inventoryItemsList, inventoryTextArea);
 
                                 } catch (NumberFormatException ex) {
                                     JOptionPane.showMessageDialog(null,
