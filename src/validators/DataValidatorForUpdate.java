@@ -251,4 +251,24 @@ public class DataValidatorForUpdate {
         }
     }
 
+    /**
+     * Checks if the new updated quantity is the same as the current quantity
+     * 
+     * @param selectedItem The selected item to be updated
+     * @param newQuantity  The new updated quantity
+     * @return True if the new updated quantity is the same as the current one,
+     *         otherwise false.
+     */
+    public static boolean isSameQuantity(InventoryItem selectedItem, int newQuantity) {
+        if (newQuantity == selectedItem.getQuantity()) {
+            JOptionPane.showMessageDialog(null,
+                    "New quantity matches the current quantity.",
+                    "No Change Detected",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return true; // Exit method
+        } else {
+            return false; // Continue method
+        }
+    }
+
 }

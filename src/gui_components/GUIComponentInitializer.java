@@ -390,7 +390,7 @@ public class GUIComponentInitializer {
                                     newUpdatedItemName = newUpdatedItemName.replaceAll("\\s+", " ").trim();
 
                                     // Validate the user input is not empty, if so, exit method
-                                    if (DataValidatorForUpdate.isUpdatedItemNameEmpty(newUpdatedItemName)) {
+                                    if (DataValidator.isFormEmpty(newUpdatedItemName)) {
                                         return;
                                     }
 
@@ -424,49 +424,34 @@ public class GUIComponentInitializer {
 
                                 try {
                                     // Check if user clicked cancel or closed the dialog
-                                    if (newQuantityStr == null) {
-                                        return; // Exit method
+                                    if (DataValidator.isInputNull(newQuantityStr)) {
+                                        return; // if true, exit method
                                     }
 
                                     // Trim and normalize whitespace in the newQuantityStr
                                     newQuantityStr = newQuantityStr.replaceAll("\\s+", " ").trim();
 
-                                    // Check if empty
-                                    if (newQuantityStr.isEmpty()) {
-                                        // Show an error message if the new item name is empty
-                                        JOptionPane.showMessageDialog(null,
-                                                "New Quantity cannot be empty!",
-                                                "Error",
-                                                JOptionPane.ERROR_MESSAGE);
-                                        return; // Exit method
+                                    // Validate the user input is not empty
+                                    if (DataValidator.isFormEmpty(newQuantityStr)) {
+                                        return; // if true, exit method
                                     }
 
-                                    // Check if the new quantity contains only digits (including negative numbers)
-                                    if (!newQuantityStr.matches("-?\\d+")) {
-                                        // Show an error message if the new quantity contains invalid characters
-                                        JOptionPane.showMessageDialog(null,
-                                                "New Quantity must contain only numbers!",
-                                                "Error",
-                                                JOptionPane.ERROR_MESSAGE);
-                                        return; // Exit method
+                                    // Validate the new quantity contains only digits
+                                    if (!DataValidator.isQuantityValid(newQuantityStr)) {
+                                        return; // if false, exit method
                                     }
 
                                     // Parse the new quantity
                                     int newQuantity = Integer.parseInt(newQuantityStr);
 
-                                    // Check if the new quantity is the same as the current one
-                                    if (newQuantity == selectedItem.getQuantity()) {
-                                        JOptionPane.showMessageDialog(null,
-                                                "New quantity matches the current quantity.",
-                                                "No Change Detected",
-                                                JOptionPane.INFORMATION_MESSAGE);
-                                        return; // Exit method
+                                    // Validate if new quantity is the same as the current quantity;
+                                    if (DataValidatorForUpdate.isSameQuantity(selectedItem, newQuantity)) {
+                                        return; // if true, exit method
                                     }
 
                                     // Show confirmation dialog for the update
                                     PromptForUpdateConfirmation.showUpdateConfirmationDialog(selectedItem,
-                                            selectedOption,
-                                            newQuantity, inventoryItemsList, inventoryTextArea);
+                                            selectedOption, newQuantity, inventoryItemsList, inventoryTextArea);
 
                                 } catch (NumberFormatException ex) {
                                     JOptionPane.showMessageDialog(null,

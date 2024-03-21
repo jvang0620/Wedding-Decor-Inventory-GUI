@@ -43,11 +43,41 @@ public class DataValidator {
         }
     }
 
+    public static boolean isFormEmpty(String inputString) {
+        if (inputString.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Empty input! All fields are required!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return true; // Exit Method
+        } else {
+            return false; // Continue Method
+        }
+    }
+
+    /**
+     * Method to validate the quantity string
+     * 
+     * @param quantityString - the quantity string to validate (ex: 1, 5, 100, 5000)
+     * @return - true if the quantity is valid, false if not
+     */
+    public static boolean isQuantityValid(String quantityString) {
+        if (quantityString.matches("\\d+")) {
+            return true; // Continue Method
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Quantity must contain only numbers! (ex: 1, 2, 5, 10, 50, 100)",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Exit Method
+        }
+    }
+
     // Method to validate the user input
-    public static boolean isValidItemNumberForCreate(String input) {
+    public static boolean isValidItemNumberForCreate(String itemNumberStr) {
 
         // Check if empty
-        if (input.isEmpty()) {
+        if (itemNumberStr.isEmpty()) {
             // Show an error message if the new item name is empty
             JOptionPane.showMessageDialog(null,
                     "Input cannot be empty!",
@@ -56,7 +86,7 @@ public class DataValidator {
         }
 
         // Ensure input contains only valid characters (A-Z, a-z. (0-9))
-        if (!input.matches("[a-zA-Z0-9\\s]+")) {
+        if (!itemNumberStr.matches("[a-zA-Z0-9\\s]+")) {
             // Show error message if the input contains invalid characters
             JOptionPane.showMessageDialog(null,
                     "Invalid characters in input! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
