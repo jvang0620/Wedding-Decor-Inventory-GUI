@@ -134,7 +134,7 @@ public class GUIComponentInitializer {
                 itemName = itemName.replaceAll("\\s+", " ").trim();
 
                 // Validate the user input is not empty and contains valid characters
-                if (!DataValidator.isValidateStringInput(itemName)) {
+                if (!DataValidator.isValidStringInput(itemName)) {
                     return; // Exit method if validation fails
                 }
 
@@ -151,7 +151,7 @@ public class GUIComponentInitializer {
                     quantityStr = quantityStr.replaceAll("\\s+", " ").trim();
 
                     // Validate the user input is not empty and contains valid characters
-                    if (!DataValidator.isValidateQuantityInput(quantityStr)) {
+                    if (!DataValidator.isValidQuantityInput(quantityStr)) {
                         return; // Exit method if validation fails
                     }
 

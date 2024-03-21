@@ -44,7 +44,7 @@ public class DataValidator {
     }
 
     // Method to validate the user input
-    public static boolean isValidateStringInput(String input) {
+    public static boolean isValidStringInput(String input) {
 
         // Check if empty
         if (input.isEmpty()) {
@@ -69,7 +69,7 @@ public class DataValidator {
     }
 
     // Method to validate the user input for the quantity
-    public static boolean isValidateQuantityInput(String quantityStr) {
+    public static boolean isValidQuantityInput(String quantityStr) {
 
         // Check if empty
         if (quantityStr.isEmpty()) {
