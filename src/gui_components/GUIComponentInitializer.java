@@ -82,7 +82,7 @@ public class GUIComponentInitializer {
             public void actionPerformed(ActionEvent e) {
 
                 // Validate the list of inventory items to see if it is empty
-                DataValidator.validateInventoryItemsList(inventoryItemsList);
+                DataValidator.isValidateInventoryItemsList(inventoryItemsList);
 
                 // Update inventory text area to display current inventory
                 UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
@@ -101,7 +101,7 @@ public class GUIComponentInitializer {
                 List<InventoryItem> trashItems = CSVHandler.readItemsFromDeletedCSVFile();
 
                 // Validate the list of deleted items to see if empty, update the text area
-                DataValidator.validateDeletedItemsList(trashItems);
+                DataValidator.isValidateDeletedItemsList(trashItems);
 
                 // Update the text area with deleted items
                 UpdateDeletedItemsTextArea.populateTextArea(trashItems, deletedInventoryTextArea);
@@ -122,34 +122,20 @@ public class GUIComponentInitializer {
                 // Update inventory text area to display current inventory
                 UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
 
-                // Prompt user to enter item details
+                // Prompt user to enter item name
                 String itemName = JOptionPane.showInputDialog(null, "Enter Item Name:");
 
                 // Check if user clicked cancel or closed the dialog
-                if (itemName == null) {
-                    return; // Exit Method
+                if (DataValidator.isInputNull(itemName)) {
+                    return; // Exit method if validation passes
                 }
 
                 // Trim and normalize whitespace in the item name
                 itemName = itemName.replaceAll("\\s+", " ").trim();
 
-                // Check if empty
-                if (itemName.isEmpty()) {
-                    // Show an error message if the new item name is empty
-                    JOptionPane.showMessageDialog(null,
-                            "Item Number cannot be empty!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Exit mthod
-                }
-
-                // Ensure item name contains only valid characters (A-Z, a-z. (0-9))
-                if (!itemName.matches("[a-zA-Z0-9\\s]+")) {
-                    // Show error message if the item name contains invalid characters
-                    JOptionPane.showMessageDialog(null,
-                            "Invalid characters in item name! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return; // Exit method
+                // Validate the user input is not empty and contains valid characters
+                if (!DataValidator.isValidateStringInput(itemName)) {
+                    return; // Exit method if validation fails
                 }
 
                 // Promte user to enter Quanity
@@ -157,42 +143,22 @@ public class GUIComponentInitializer {
 
                 try {
                     // Check if user clicked cancel or closed the dialog
-                    if (quantityStr == null) {
-                        return; // Exit method
+                    if (DataValidator.isInputNull(quantityStr)) {
+                        return; // Exit method if validation passes
                     }
 
                     // Trim and normalize whitespace in the quantityStr
                     quantityStr = quantityStr.replaceAll("\\s+", " ").trim();
 
-                    // Check if empty
-                    if (quantityStr.isEmpty()) {
-                        // Show error message if the quantity is empty
-                        JOptionPane.showMessageDialog(null, "Quantity cannot be empty!", "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return; // Exit method
+                    // Validate the user input is not empty and contains valid characters
+                    if (!DataValidator.isValidateQuantityInput(quantityStr)) {
+                        return; // Exit method if validation fails
                     }
 
-                    // Check if the quantity contains only digits
-                    if (!quantityStr.matches("\\d+")) {
-                        // Show an error message if the new quantity contains invalid characters
-                        JOptionPane.showMessageDialog(null,
-                                "Quantity must contain only numbers! (ex: 1, 2, 5, 10, 50, 100)",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return; // Exit method
-                    }
-
-                    // Parse quantity input
+                    // Parse and validate quanity is a positive number
                     int quantity = Integer.parseInt(quantityStr);
-
-                    // Check if quantity is negative or zero
-                    if (quantity <= 0) {
-                        // Show error message if the quantity is not within a reasonable range
-                        JOptionPane.showMessageDialog(null,
-                                "Quantity must be a positive number! (ex: 1, 2, 5, 10, 50, 100)",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                        return; // Exit method
+                    if (!DataValidator.isPositiveQuantity(quantity)) {
+                        return; // Exit method if validation fails
                     }
 
                     // Prompt user to select item type from a predefined list of options.
@@ -203,17 +169,8 @@ public class GUIComponentInitializer {
                             JOptionPane.QUESTION_MESSAGE, null, types, types[0]);
 
                     // Check if user clicked cancel or closed the dialog
-                    if (itemType == null) {
-                        return; // Exit method
-                    }
-
-                    // Ensure item name contains only valid characters (A-Z, a-z) or (0-9)
-                    if (!itemName.matches("[a-zA-Z0-9\\s]+")) {
-                        // Show error message if the item name contains invalid characters
-                        JOptionPane.showMessageDialog(null,
-                                "Invalid characters in item name! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return; // Exit method
+                    if (DataValidator.isInputNull(itemType)) {
+                        return; // Exit method if validation passes
                     }
 
                     // Generate random item number based on item type
@@ -227,8 +184,8 @@ public class GUIComponentInitializer {
                     String message = String.format(
                             "Item Name: %s\nQuantity: %d\nItem Type: %s\n\n"
                                     + "Are you sure you want to create this inventory item?",
-                            itemName,
-                            quantity, itemType);
+                            itemName, quantity, itemType);
+
                     int confirmation = JOptionPane.showConfirmDialog(null, message,
                             "Confirm Addition",
                             JOptionPane.YES_NO_OPTION);
