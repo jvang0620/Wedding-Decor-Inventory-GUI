@@ -24,6 +24,7 @@ import src.util.RandomNumberGenerator;
 import src.util.UpdateDeletedItemsTextArea;
 import src.util.UpdateInventoryTextArea;
 import src.util.ValidatingItemNumber;
+import src.validators.DataValidator;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -80,12 +81,8 @@ public class GUIComponentInitializer {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // check if list is empty, if so, display message and exit method
-                if (inventoryItemsList.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "There are no items in the inventory to display.", "No Items",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
+                // Validate the list of inventory items to see if it is empty
+                DataValidator.validateInventoryItemsList(inventoryItemsList);
 
                 // Update inventory text area to display current inventory
                 UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
@@ -93,7 +90,7 @@ public class GUIComponentInitializer {
         });
 
         /*
-         * Button to view items in the trash
+         * Button to view items in the trash bin
          */
         JButton viewDeletedItemsButton = new JButton("View Deleted Items");
         // ActionListener for the "Deleted Items" button
