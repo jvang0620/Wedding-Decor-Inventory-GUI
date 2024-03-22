@@ -125,40 +125,50 @@ public class GUIComponentInitializer {
                 // Prompt user to enter item name
                 String itemName = JOptionPane.showInputDialog(null, "Enter Item Name:");
 
-                // Check if user clicked cancel or closed the dialog
-                if (DataValidator.isInputNull(itemName)) {
-                    return; // Exit method if validation passes
-                }
-
-                // Trim and normalize whitespace in the item name
-                itemName = itemName.replaceAll("\\s+", " ").trim();
-
-                // Validate the user input is not empty and contains valid characters
-                if (!DataValidator.isValidItemNameForCreate(itemName)) {
-                    return; // Exit method if validation fails
-                }
-
-                // Promte user to enter Quanity
-                String quantityStr = JOptionPane.showInputDialog(null, "Enter Quantity:");
-
                 try {
                     // Check if user clicked cancel or closed the dialog
+                    if (DataValidator.isInputNull(itemName)) {
+                        return; // If true, exit method
+                    }
+
+                    // Trim and normalize whitespace in the item name
+                    itemName = itemName.replaceAll("\\s+", " ").trim();
+
+                    // Validate the user input is not empty
+                    if (DataValidator.isInputEmpty(itemName)) {
+                        return; // If true, exit method
+                    }
+
+                    // Validate the user input contains valid characters
+                    if (!DataValidator.isValidItemName(itemName)) {
+                        return; // If false, exit method
+                    }
+
+                    // Promte user to enter Quanity
+                    String quantityStr = JOptionPane.showInputDialog(null, "Enter Quantity:");
+
+                    // Validate if user clicked cancel or closed the dialog
                     if (DataValidator.isInputNull(quantityStr)) {
-                        return; // Exit method if validation passes
+                        return; // If true, exit method
                     }
 
                     // Trim and normalize whitespace in the quantityStr
                     quantityStr = quantityStr.replaceAll("\\s+", " ").trim();
 
-                    // Validate the user input is not empty and contains valid characters
-                    if (!DataValidator.isValidQuantityInput(quantityStr)) {
-                        return; // Exit method if validation fails
+                    // Validate the user input is not empty
+                    if (DataValidator.isInputEmpty(quantityStr)) {
+                        return; // If true, exit method
+                    }
+
+                    // Validate the user input contains valid characters
+                    if (!DataValidator.isQuantityValid(quantityStr)) {
+                        return; // If false, exit method
                     }
 
                     // Parse and validate quanity is a positive number
                     int quantity = Integer.parseInt(quantityStr);
                     if (!DataValidator.isPositiveQuantity(quantity)) {
-                        return; // Exit method if validation fails
+                        return; // If false, exit method
                     }
 
                     // Prompt user to select item type from a predefined list of options.
@@ -170,7 +180,7 @@ public class GUIComponentInitializer {
 
                     // Check if user clicked cancel or closed the dialog
                     if (DataValidator.isInputNull(itemType)) {
-                        return; // Exit method if validation passes
+                        return; // If true, exit method
                     }
 
                     // Generate random item number based on item type

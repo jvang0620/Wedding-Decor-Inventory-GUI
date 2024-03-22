@@ -95,60 +95,12 @@ public class DataValidator {
         }
     }
 
-    // Method to validate the user input
-    public static boolean isValidItemNameForCreate(String itemName) {
-
-        // Check if empty
-        if (itemName.isEmpty()) {
-            // Show an error message if the new item name is empty
-            JOptionPane.showMessageDialog(null,
-                    "Input cannot be empty!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return false; // Validation failed
-        }
-
-        // Ensure input contains only valid characters (A-Z, a-z. (0-9))
-        if (!itemName.matches("[a-zA-Z0-9\\s]+")) {
-            // Show error message if the input contains invalid characters
-            JOptionPane.showMessageDialog(null,
-                    "Invalid characters in input! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // Validation failed
-        }
-
-        return true; // Validation passed
-    }
-
-    // Method to validate the user input for the quantity
-    public static boolean isValidQuantityInput(String quantityStr) {
-
-        // Check if empty
-        if (quantityStr.isEmpty()) {
-            // Show error message if the quantity is empty
-            JOptionPane.showMessageDialog(null, "Quantity cannot be empty!", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // Validation failed
-        }
-
-        // Check if the quantity contains only digits
-        if (!quantityStr.matches("\\d+")) {
-            // Show an error message if the new quantity contains invalid characters
-            JOptionPane.showMessageDialog(null,
-                    "Quantity must contain only numbers! (ex: 1, 2, 5, 10, 50, 100)",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // Validation failed
-        }
-
-        return true; // Validation passed
-    }
-
     // Method to validate that quantity is a positive number
     public static boolean isPositiveQuantity(int quantity) {
-
-        // Check if quantity is negative or zero
-        if (quantity <= 0) {
+        // Check if quantity is 1 or greater
+        if (quantity >= 1) {
+            return true; // Validation passed
+        } else {
             // Show error message if the quantity is not within a reasonable range
             JOptionPane.showMessageDialog(null,
                     "Quantity must be a positive number! (ex: 1, 2, 5, 10, 50, 100)",
@@ -156,7 +108,6 @@ public class DataValidator {
                     JOptionPane.ERROR_MESSAGE);
             return false; // // Validation failed
         }
-        return true; // Validation passed
     }
 
     // Method to validate the user input for the item number
