@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.swing.JTextArea;
 
 import src.model.InventoryItem;
@@ -21,11 +20,13 @@ public class UpdateDeletedItemsTextArea {
      * Formats the creation date to display in the format "MM/dd/yy".
      * Sets the text of the deleted items text area to the generated report.
      * 
-     * @param deletedItems The list of InventoryItem objects representing deleted
-     *                     items.
+     * @param deletedItems             The list of InventoryItem objects
+     *                                 representing deleted items.
+     * @param deletedInventoryTextArea The JTextArea to display the deleted items.
      */
     public static void populateTextArea(List<InventoryItem> deletedItems,
             JTextArea deletedInventoryTextArea) {
+
         // Initialize StringBuilder to store the deleted items text
         StringBuilder sb = new StringBuilder();
 
