@@ -25,6 +25,8 @@ import src.util.UpdateDeletedItemsTextArea;
 import src.util.UpdateInventoryTextArea;
 import src.validators.DataValidator;
 import src.validators.DataValidatorForUpdates;
+import src.validators.DataValidatorForViewDeleted;
+import src.validators.DataValidatorForViewInventory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -82,7 +84,7 @@ public class GUIComponentInitializer {
             public void actionPerformed(ActionEvent e) {
 
                 // Validate the list of inventory items to see if it is empty
-                if (DataValidator.isInventoryItemsListEmpty(inventoryItemsList, inventoryTextArea)) {
+                if (DataValidatorForViewInventory.isInventoryItemsListEmpty(inventoryItemsList, inventoryTextArea)) {
                     return; // If true, exit method
                 }
 
@@ -103,7 +105,7 @@ public class GUIComponentInitializer {
                 List<InventoryItem> trashItems = CSVHandler.readItemsFromDeletedCSVFile();
 
                 // Validate the list of deleted items to see if empty, update the text area
-                if (DataValidator.isDeletedItemsListEmpty(trashItems, deletedInventoryTextArea)) {
+                if (DataValidatorForViewDeleted.isDeletedItemsListEmpty(trashItems, deletedInventoryTextArea)) {
                     return; // If true, exit method
                 }
 
