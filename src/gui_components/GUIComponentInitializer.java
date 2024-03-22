@@ -145,28 +145,28 @@ public class GUIComponentInitializer {
                     }
 
                     // Promte user to enter Quanity
-                    String quantityStr = JOptionPane.showInputDialog(null, "Enter Quantity:");
+                    String quantityString = JOptionPane.showInputDialog(null, "Enter Quantity:");
 
                     // Validate if user clicked cancel or closed the dialog
-                    if (DataValidator.isInputNull(quantityStr)) {
+                    if (DataValidator.isInputNull(quantityString)) {
                         return; // If true, exit method
                     }
 
                     // Trim and normalize whitespace in the quantityStr
-                    quantityStr = quantityStr.replaceAll("\\s+", " ").trim();
+                    quantityString = quantityString.replaceAll("\\s+", " ").trim();
 
                     // Validate the user input is not empty
-                    if (DataValidator.isInputEmpty(quantityStr)) {
+                    if (DataValidator.isInputEmpty(quantityString)) {
                         return; // If true, exit method
                     }
 
-                    // Validate the user input contains valid characters
-                    if (!DataValidator.isQuantityInputValid(quantityStr)) {
+                    // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
+                    if (!DataValidator.isQuantityInputValid(quantityString)) {
                         return; // If false, exit method
                     }
 
-                    // Parse and validate quanity is a positive number
-                    int quantity = Integer.parseInt(quantityStr);
+                    // Parse and validate that quantity is a positive number
+                    int quantity = Integer.parseInt(quantityString);
                     if (!DataValidator.isPositiveQuantity(quantity)) {
                         return; // If false, exit method
                     }
@@ -253,28 +253,31 @@ public class GUIComponentInitializer {
                     UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
 
                     // Prompt user to enter the item number for the item to be updated
-                    String itemNumberStr = JOptionPane.showInputDialog(null, "Enter Item Number to Update:");
+                    String itemNumberString = JOptionPane.showInputDialog(null, "Enter Item Number to Update:");
 
                     // Validate if user clicked cancel or closed the dialog
-                    if (DataValidator.isInputNull(itemNumberStr)) {
+                    if (DataValidator.isInputNull(itemNumberString)) {
                         return; // If true, exit method
                     }
 
                     // Trim and normalize whitespace in the item Number String
-                    itemNumberStr = itemNumberStr.replaceAll("\\s+", " ").trim();
+                    itemNumberString = itemNumberString.replaceAll("\\s+", " ").trim();
 
                     // Validate the user input is not empty
-                    if (DataValidator.isInputEmpty(itemNumberStr)) {
+                    if (DataValidator.isInputEmpty(itemNumberString)) {
                         return; // If true, exit method
                     }
 
                     // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
-                    if (!DataValidator.isQuantityInputValid(itemNumberStr)) {
+                    if (!DataValidator.isQuantityInputValid(itemNumberString)) {
                         return; // If false, exit method
                     }
 
-                    // Parse the item number from the user input
-                    int itemNumberToUpdate = Integer.parseInt(itemNumberStr);
+                    // Parse and validate that quantity is a positive number
+                    int itemNumberToUpdate = Integer.parseInt(itemNumberString);
+                    if (!DataValidator.isPositiveQuantity(itemNumberToUpdate)) {
+                        return; // If false, exit method
+                    }
 
                     // Create variable
                     InventoryItem selectedItem = null;
@@ -306,31 +309,34 @@ public class GUIComponentInitializer {
                         switch (selectedOption) {
                             case "Item Number":
                                 // Prompt user to enter a new value for the item number
-                                String newItemNumberStr = JOptionPane.showInputDialog(null,
+                                String newItemNumberString = JOptionPane.showInputDialog(null,
                                         "Enter new value for Item Number:",
                                         selectedItem.getItemNumber());
 
                                 try {
                                     // Validate if user clicked cancel or closed the dialog
-                                    if (DataValidator.isInputNull(newItemNumberStr)) {
+                                    if (DataValidator.isInputNull(newItemNumberString)) {
                                         return; // If true, exit method
                                     }
 
                                     // Trim and normalize whitespace in the newItemNumberStr
-                                    newItemNumberStr = newItemNumberStr.replaceAll("\\s+", " ").trim();
+                                    newItemNumberString = newItemNumberString.replaceAll("\\s+", " ").trim();
 
                                     // Validate the user input is not empty
-                                    if (DataValidator.isInputEmpty(newItemNumberStr)) {
+                                    if (DataValidator.isInputEmpty(newItemNumberString)) {
                                         return; // If true, exit method
                                     }
 
                                     // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
-                                    if (!DataValidator.isQuantityInputValid(newItemNumberStr)) {
+                                    if (!DataValidator.isQuantityInputValid(newItemNumberString)) {
                                         return; // If false, exit method
                                     }
 
-                                    // Parse the new item number
-                                    int newUpdatedItemNumber = Integer.parseInt(newItemNumberStr);
+                                    // Parse and validate that quantity is a positive number
+                                    int newUpdatedItemNumber = Integer.parseInt(newItemNumberString);
+                                    if (!DataValidator.isPositiveQuantity(newUpdatedItemNumber)) {
+                                        return; // If false, exit method
+                                    }
 
                                     // Validate that the new updated item number is valid
                                     if (!DataValidatorForUpdates.isUpdatedItemNumberValid(selectedItem.getItemType(),
@@ -455,13 +461,16 @@ public class GUIComponentInitializer {
                                         return; // if true, exit method
                                     }
 
-                                    // Validate the new quantity contains only digits
+                                    // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
                                     if (!DataValidator.isQuantityInputValid(newQuantityStr)) {
                                         return; // if false, exit method
                                     }
 
-                                    // Parse the new quantity
+                                    // Parse and validate that quantity is a positive number
                                     int newQuantity = Integer.parseInt(newQuantityStr);
+                                    if (!DataValidator.isPositiveQuantity(newQuantity)) {
+                                        return; // If false, exit method
+                                    }
 
                                     // Validate if new quantity is the same as the current quantity;
                                     if (DataValidatorForUpdates.isSameQuantity(selectedItem, newQuantity)) {
@@ -534,8 +543,11 @@ public class GUIComponentInitializer {
                         return; // If false, exit method
                     }
 
-                    // Parse the input to an integer
+                    // Parse and validate that quantity is a positive number
                     int itemNumberToDelete = Integer.parseInt(itemNumberString);
+                    if (!DataValidator.isPositiveQuantity(itemNumberToDelete)) {
+                        return; // If false, exit method
+                    }
 
                     // Create variable
                     InventoryItem itemToDelete = null;
@@ -640,13 +652,16 @@ public class GUIComponentInitializer {
                                 return; // If true, exit method
                             }
 
-                            // Validate the quantity input (ex: 1, 5, 100, 5000)
+                            // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
                             if (!DataValidator.isQuantityInputValid(itemNumberString)) {
                                 return; // If false, exit method
                             }
 
-                            // Parse the input to an integer
+                            // Parse and validate that quantity is a positive number
                             int itemNumberToDeletePermanently = Integer.parseInt(itemNumberString);
+                            if (!DataValidator.isPositiveQuantity(itemNumberToDeletePermanently)) {
+                                return; // If false, exit method
+                            }
 
                             // Read from deleted item csv file and set to list
                             deletedItemsList = CSVHandler.readItemsFromDeletedCSVFile();
@@ -776,13 +791,16 @@ public class GUIComponentInitializer {
                                 return; // If true, exit method
                             }
 
-                            // Validate the quantity input (ex: 1, 5, 100, 5000)
+                            // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
                             if (!DataValidator.isQuantityInputValid(itemNumberString)) {
                                 return; // If false, exit method
                             }
 
-                            // Parse input to integer
+                            // Parse and validate that quantity is a positive number
                             int itemNumber = Integer.parseInt(itemNumberString);
+                            if (!DataValidator.isPositiveQuantity(itemNumber)) {
+                                return; // If false, exit method
+                            }
 
                             // Create variablea
                             InventoryItem itemToRestore = null;

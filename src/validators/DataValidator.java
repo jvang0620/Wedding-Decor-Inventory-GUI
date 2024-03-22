@@ -104,9 +104,28 @@ public class DataValidator {
     }
 
     /**
+     * Method to validate that quantity is a positive number
+     * 
+     * @param quantity - the quantity to validate
+     * @return - true if the quantity is a positive number, false if not
+     */
+    public static boolean isPositiveQuantity(int quantity) {
+        // Check if quantity is 1 or greater
+        if (quantity >= 1) {
+            return true; // Validation passed
+        } else {
+            // Show error message if the quantity is not within a reasonable range
+            JOptionPane.showMessageDialog(null,
+                    "Quantity must be a positive number! (ex: 1, 2, 5, 10, 50, 100)",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // // Validation failed
+        }
+    }
+
+    /**
      * Method to validate if the new item name contains only valid characters (A-Z,
-     * a-z.
-     * (0-9))
+     * a-z, or digits 0-9)
      * 
      * @param itemName The new item name
      * @return True if the new item name contains only valid characters,
@@ -126,22 +145,13 @@ public class DataValidator {
         }
     }
 
-    // Method to validate that quantity is a positive number
-    public static boolean isPositiveQuantity(int quantity) {
-        // Check if quantity is 1 or greater
-        if (quantity >= 1) {
-            return true; // Validation passed
-        } else {
-            // Show error message if the quantity is not within a reasonable range
-            JOptionPane.showMessageDialog(null,
-                    "Quantity must be a positive number! (ex: 1, 2, 5, 10, 50, 100)",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // // Validation failed
-        }
-    }
-
-    // Method to validate the user input for the item number
+    /**
+     * Method to validate the user input for the item number
+     * 
+     * @param selectedItem - the selected item
+     * @param itemNumber   - the item number to validate
+     * @return - true if the item number is found, false if not
+     */
     public static boolean isItemNumberFound(InventoryItem selectedItem, int itemNumber) {
         // If the item number does not exist
         if (selectedItem == null) {
