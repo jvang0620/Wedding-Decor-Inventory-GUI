@@ -363,14 +363,14 @@ public class GUIComponentInitializer {
                                         JOptionPane.QUESTION_MESSAGE, null, currentTypes,
                                         selectedItem.getItemType());
                                 try {
-                                    // Check if user clicked cancel or closed the dialog, if so, exit method
+                                    // Check if user clicked cancel or closed the dialog
                                     if (DataValidator.isInputNull(newType)) {
-                                        return;
+                                        return; // If true, exit method
                                     }
 
                                     // Checks if the new updated item type is the same as the current item type
                                     if (DataValidatorForUpdates.isSameItemType(selectedItem, newType)) {
-                                        return; // Exit method
+                                        return; // If true, exit method
                                     }
 
                                     // Show confirmation dialog for the update
