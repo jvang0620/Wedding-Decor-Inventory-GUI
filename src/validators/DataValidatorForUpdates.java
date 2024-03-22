@@ -7,20 +7,6 @@ import src.model.InventoryItem;
 
 public class DataValidatorForUpdates {
 
-    // Method to validate the list of updated items
-    public static boolean validateUpdatedItemsList(List<InventoryItem> updatedItems) {
-
-        // Check if list is empty, if so, display message and exit method
-        if (updatedItems.isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "No updated items found.",
-                    "Information", JOptionPane.INFORMATION_MESSAGE);
-            return false; // Validation failed
-        } else {
-            return true; // Validation passed
-        }
-    }
-
     /**
      * Checks if the provided item number is valid for the given item type.
      * Valid item numbers are within specific ranges based on the item type:

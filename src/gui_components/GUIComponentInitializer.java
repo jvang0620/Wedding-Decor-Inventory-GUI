@@ -161,7 +161,7 @@ public class GUIComponentInitializer {
                     }
 
                     // Validate the user input contains valid characters
-                    if (!DataValidator.isQuantityValid(quantityStr)) {
+                    if (!DataValidator.isQuantityInputValid(quantityStr)) {
                         return; // If false, exit method
                     }
 
@@ -245,7 +245,7 @@ public class GUIComponentInitializer {
 
                 try {
                     // Validate if the list is empty
-                    if (!DataValidatorForUpdates.validateUpdatedItemsList(list)) {
+                    if (!DataValidator.isCSVFileEmpty(list)) {
                         return; // If false, exit method
                     }
 
@@ -257,7 +257,7 @@ public class GUIComponentInitializer {
 
                     // Validate if user clicked cancel or closed the dialog
                     if (DataValidator.isInputNull(itemNumberStr)) {
-                        return; // If so, exit method
+                        return; // If true, exit method
                     }
 
                     // Trim and normalize whitespace in the item Number String
@@ -269,7 +269,7 @@ public class GUIComponentInitializer {
                     }
 
                     // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
-                    if (!DataValidator.isQuantityValid(itemNumberStr)) {
+                    if (!DataValidator.isQuantityInputValid(itemNumberStr)) {
                         return; // If false, exit method
                     }
 
@@ -325,7 +325,7 @@ public class GUIComponentInitializer {
                                     }
 
                                     // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
-                                    if (!DataValidator.isQuantityValid(newItemNumberStr)) {
+                                    if (!DataValidator.isQuantityInputValid(newItemNumberStr)) {
                                         return; // If false, exit method
                                     }
 
@@ -456,7 +456,7 @@ public class GUIComponentInitializer {
                                     }
 
                                     // Validate the new quantity contains only digits
-                                    if (!DataValidator.isQuantityValid(newQuantityStr)) {
+                                    if (!DataValidator.isQuantityInputValid(newQuantityStr)) {
                                         return; // if false, exit method
                                     }
 
@@ -504,68 +504,53 @@ public class GUIComponentInitializer {
                 // Read from inventory csv file
                 List<InventoryItem> list = CSVHandler.readItemsFromInventoryCSVFile();
 
-                // Check if there are items to delete
-                if (list.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No Items to Delete", "Info",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return; // Exit the method
-                }
-
-                // Update inventory text area to display current inventory
-                UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
-
-                // Prompt the user to enter the item number to delete
-                String itemNumberStr = JOptionPane.showInputDialog(null, "Enter Item Number to Delete:");
-
-                // Check if user clicked cancel or closed the dialog
-                if (itemNumberStr == null) {
-                    return; // Exit method
-                }
-
-                // Trim and normalize whitespace in the itemNumberStr
-                itemNumberStr = itemNumberStr.replaceAll("\\s+", " ").trim();
-
-                // Check if empty
-                if (itemNumberStr.isEmpty()) {
-                    // Show an error message if the new item name is empty
-                    JOptionPane.showMessageDialog(null,
-                            "Item Number cannot be empty!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Exit mthod
-                }
-
-                // Check if the input is numbers
-                if (!itemNumberStr.matches("\\d+")) {
-                    // Show an error message if item number is not numbers
-                    JOptionPane.showMessageDialog(null,
-                            "The item number must contain only numbers!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return; // Exit method
-                }
-
                 try {
+                    // Validate if the list is empty
+                    if (!DataValidator.isCSVFileEmpty(list)) {
+                        return; // If false, exit method
+                    }
+
+                    // Update inventory text area to display current inventory
+                    UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
+
+                    // Prompt the user to enter the item number to delete
+                    String itemNumberString = JOptionPane.showInputDialog(null, "Enter Item Number to Delete:");
+
+                    // Validate if user clicked cancel or closed the dialog
+                    if (DataValidator.isInputNull(itemNumberString)) {
+                        return; // If true, exit method
+                    }
+
+                    // Trim and normalize whitespace in the itemNumberStr
+                    itemNumberString = itemNumberString.replaceAll("\\s+", " ").trim();
+
+                    // Validate if input is empty
+                    if (DataValidator.isInputEmpty(itemNumberString)) {
+                        return; // If true, exit method
+                    }
+
+                    // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
+                    if (!DataValidator.isQuantityInputValid(itemNumberString)) {
+                        return; // If false, exit method
+                    }
+
                     // Parse the input to an integer
-                    int itemNumberToDelete = Integer.parseInt(itemNumberStr);
+                    int itemNumberToDelete = Integer.parseInt(itemNumberString);
 
                     // Create variable
                     InventoryItem itemToDelete = null;
 
-                    // Find the item to delete
+                    // Iterate thorugh list and find the item to delete, if not found, exit loops
                     for (InventoryItem item : inventoryItemsList) {
                         if (item.getItemNumber() == itemNumberToDelete) {
                             itemToDelete = item;
-                            break;
+                            break; // selectedItem will remain 'null' if the item number is not found
                         }
                     }
 
-                    // If the item number does not exist
-                    if (itemToDelete == null) {
-                        // Notify the user if the item is not found
-                        JOptionPane.showMessageDialog(null,
-                                "Item number " + itemNumberToDelete + " does not exist",
-                                "Deletion Failed", JOptionPane.ERROR_MESSAGE);
-                        return; // Exit method
+                    // Validate if the item number exists
+                    if (!DataValidator.isItemNumberFound(itemToDelete, itemNumberToDelete)) {
+                        return; // If not, exit the method
                     }
 
                     // Display a confirmation dialog with item details before deletion
