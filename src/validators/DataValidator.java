@@ -73,11 +73,33 @@ public class DataValidator {
         }
     }
 
+    /**
+     * Checks if the new item name contains only valid characters (A-Z, a-z.
+     * (0-9))
+     * 
+     * @param itemName The new item name
+     * @return True if the new item name contains only valid characters,
+     *         otherwise false
+     */
+    public static boolean isValidItemName(String itemName) {
+        // Ensure input contains only valid characters (A-Z, a-z. (0-9))
+        if (itemName.matches("[a-zA-Z0-9\\s]+")) {
+            return true; // Continue method
+        } else {
+            // Show error message if the item name contains invalid characters
+            JOptionPane.showMessageDialog(null,
+                    "Invalid characters in item name! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // Exit method
+        }
+    }
+
     // Method to validate the user input
-    public static boolean isValidItemNameForCreate(String itemNumberStr) {
+    public static boolean isValidItemNameForCreate(String itemName) {
 
         // Check if empty
-        if (itemNumberStr.isEmpty()) {
+        if (itemName.isEmpty()) {
             // Show an error message if the new item name is empty
             JOptionPane.showMessageDialog(null,
                     "Input cannot be empty!",
@@ -86,7 +108,7 @@ public class DataValidator {
         }
 
         // Ensure input contains only valid characters (A-Z, a-z. (0-9))
-        if (!itemNumberStr.matches("[a-zA-Z0-9\\s]+")) {
+        if (!itemName.matches("[a-zA-Z0-9\\s]+")) {
             // Show error message if the input contains invalid characters
             JOptionPane.showMessageDialog(null,
                     "Invalid characters in input! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",

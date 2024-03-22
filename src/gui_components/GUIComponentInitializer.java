@@ -363,12 +363,12 @@ public class GUIComponentInitializer {
                                         JOptionPane.QUESTION_MESSAGE, null, currentTypes,
                                         selectedItem.getItemType());
                                 try {
-                                    // Check if user clicked cancel or closed the dialog
+                                    // Validate if user clicked cancel or closed the dialog
                                     if (DataValidator.isInputNull(newType)) {
                                         return; // If true, exit method
                                     }
 
-                                    // Checks if the new updated item type is the same as the current item type
+                                    // Validate if the new updated item type is the same as the current item type
                                     if (DataValidatorForUpdates.isSameItemType(selectedItem, newType)) {
                                         return; // If true, exit method
                                     }
@@ -390,27 +390,27 @@ public class GUIComponentInitializer {
                                         selectedItem.getItemName());
                                 try {
 
-                                    // Check if user clicked cancel or closed the dialog, if so, exit method
+                                    // Validate if user clicked cancel or closed the dialog
                                     if (DataValidator.isInputNull(newUpdatedItemName)) {
-                                        return;
+                                        return; // If true, exit method
                                     }
 
                                     // Trim and normalize whitespace in the newUpdatedItemName
                                     newUpdatedItemName = newUpdatedItemName.replaceAll("\\s+", " ").trim();
 
-                                    // Validate the user input is not empty, if so, exit method
+                                    // Validate the user input is not empty
                                     if (DataValidator.isInputEmpty(newUpdatedItemName)) {
-                                        return;
+                                        return; // If true, exit method
                                     }
 
-                                    // Check if the new updated item name is the same as the current item name
+                                    // Validate if the new updated item name is the same as the current item name
                                     if (DataValidatorForUpdates.isSameItemName(selectedItem, newUpdatedItemName)) {
-                                        return; // If so, exit method
+                                        return; // If true, exit method
                                     }
 
                                     // Validate if the new updated item name contains only valid characters
-                                    if (!DataValidatorForUpdates.isValidItemName(newUpdatedItemName)) {
-                                        return; // If so, exit method
+                                    if (!DataValidator.isValidItemName(newUpdatedItemName)) {
+                                        return; // If false, exit method
                                     }
 
                                     // Show confirmation dialog for the update

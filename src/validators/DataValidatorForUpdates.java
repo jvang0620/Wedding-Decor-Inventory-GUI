@@ -201,28 +201,6 @@ public class DataValidatorForUpdates {
     }
 
     /**
-     * Checks if the new updated item name contains only valid characters (A-Z, a-z.
-     * (0-9))
-     * 
-     * @param newUpdatedItemName The new updated item name
-     * @return True if the new updated item name contains only valid characters,
-     *         otherwise false
-     */
-    public static boolean isValidItemName(String newUpdatedItemName) {
-        // Ensure input contains only valid characters (A-Z, a-z. (0-9))
-        if (!newUpdatedItemName.matches("[a-zA-Z0-9\\s]+")) {
-            // Show error message if the item name contains invalid characters
-            JOptionPane.showMessageDialog(null,
-                    "Invalid characters in item name! Only alphanumeric characters (A-Z, a-z) or digits (0-9).",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return false; // Exit method
-        } else {
-            return true; // Continue method
-        }
-    }
-
-    /**
      * Checks if the new updated quantity is the same as the current quantity
      * 
      * @param selectedItem The selected item to be updated
