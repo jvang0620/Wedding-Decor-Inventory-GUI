@@ -289,7 +289,7 @@ public class GUIComponentInitializer {
 
                     // Validate if the item number exists
                     if (!DataValidator.isItemNumberFound(selectedItem, itemNumberToUpdate)) {
-                        return; // If not, exit the method
+                        return; // If false, exit the method
                     }
 
                     // Display a dialog to select the field to update
@@ -550,7 +550,7 @@ public class GUIComponentInitializer {
 
                     // Validate if the item number exists
                     if (!DataValidator.isItemNumberFound(itemToDelete, itemNumberToDelete)) {
-                        return; // If not, exit the method
+                        return; // If false, exit the method
                     }
 
                     // Display a confirmation dialog with item details before deletion
@@ -605,11 +605,9 @@ public class GUIComponentInitializer {
                 // Read from deleted item csv file and set to list
                 List<InventoryItem> deletedItemsList = CSVHandler.readItemsFromDeletedCSVFile();
 
-                // Check if there are items to delete, exit method
-                if (deletedItemsList.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Nothing to Permanently Delete", "Info",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
+                // Validate if CSV file is empty
+                if (DataValidator.isCSVFileEmpty(deletedItemsList)) {
+                    return; // If true, exit method
                 }
 
                 // Update the text area with deleted items
@@ -624,76 +622,49 @@ public class GUIComponentInitializer {
 
                 // Perform actions based on user choice
                 switch (choice) {
-                    case JOptionPane.YES_OPTION: // Delete one item
-                        break;
-                    case JOptionPane.NO_OPTION: // Delete all items
-                        break;
-                    case JOptionPane.CANCEL_OPTION: // Cancel
-                        break;
-                    default:
-                        break;
-                }
-
-                // Perform actions based on user choice
-                switch (choice) {
                     case JOptionPane.YES_OPTION: // Permanently delete one item
-                        String itemNumberStr = JOptionPane.showInputDialog(null,
+                        String itemNumberString = JOptionPane.showInputDialog(null,
                                 "Enter the item number to PERMANENTLY DELETE:");
 
-                        // Check if user clicked cancel or closed the dialog
-                        if (itemNumberStr == null) {
-                            return; // Exit method
-                        }
-
-                        // Trim and normalize whitespace in the itemNumberStr
-                        itemNumberStr = itemNumberStr.replaceAll("\\s+", " ").trim();
-
-                        // Check if empty
-                        if (itemNumberStr.isEmpty()) {
-                            // Show an error message if the new item name is empty
-                            JOptionPane.showMessageDialog(null,
-                                    "Item Number cannot be empty!",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-                            return; // Exit mthod
-                        }
-
-                        // Check if the input is numbers
-                        if (!itemNumberStr.matches("\\d+")) {
-                            // Show an error message if item number is not numbers
-                            JOptionPane.showMessageDialog(null,
-                                    "The item number must contain only numbers!",
-                                    "Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            return; // Exit method
-                        }
-
                         try {
+                            // Validate if user clicked cancel or closed the dialog
+                            if (DataValidator.isInputNull(itemNumberString)) {
+                                return; // If true, exit method
+                            }
+
+                            // Trim and normalize whitespace in the itemNumberStr
+                            itemNumberString = itemNumberString.replaceAll("\\s+", " ").trim();
+
+                            // Validate if input is empty
+                            if (DataValidator.isInputEmpty(itemNumberString)) {
+                                return; // If true, exit method
+                            }
+
+                            // Validate the quantity input (ex: 1, 5, 100, 5000)
+                            if (!DataValidator.isQuantityInputValid(itemNumberString)) {
+                                return; // If false, exit method
+                            }
+
                             // Parse the input to an integer
-                            int itemNumberToDelete = Integer.parseInt(itemNumberStr);
+                            int itemNumberToDeletePermanently = Integer.parseInt(itemNumberString);
 
                             // Read from deleted item csv file and set to list
                             deletedItemsList = CSVHandler.readItemsFromDeletedCSVFile();
 
                             // Create variables
-                            boolean itemFound = false;
                             InventoryItem itemToDelete = null;
 
-                            // Search through deleted item list and find matching item
+                            // Iterate thorugh list and find the item to delete, if not found, exit loops
                             for (InventoryItem item : deletedItemsList) {
-                                if (item.getItemNumber() == itemNumberToDelete) {
+                                if (item.getItemNumber() == itemNumberToDeletePermanently) {
                                     itemToDelete = item;
-                                    itemFound = true;
-                                    break;
+                                    break; // selectedItem will remain 'null' if the item number is not found
                                 }
                             }
 
-                            // If the item number does not exist
-                            if (!itemFound) {
-                                JOptionPane.showMessageDialog(null,
-                                        "Item number " + itemNumberToDelete
-                                                + " does not exist.",
-                                        "Deletion Failed", JOptionPane.ERROR_MESSAGE);
-                                return; // Exit method
+                            // Validate if the item number exists
+                            if (!DataValidator.isItemNumberFound(itemToDelete, itemNumberToDeletePermanently)) {
+                                return; // If false, exit the method
                             }
 
                             int confirmDelete = JOptionPane.showConfirmDialog(null,
@@ -771,11 +742,9 @@ public class GUIComponentInitializer {
                 // Read from deleted item csv file and set to list
                 List<InventoryItem> deletedItemsList = CSVHandler.readItemsFromDeletedCSVFile();
 
-                // Check if there are items to restore
-                if (deletedItemsList.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No Items to Restore", "Info",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return; // Exit the method
+                // Validate if CSV file is empty
+                if (DataValidator.isCSVFileEmpty(deletedItemsList)) {
+                    return; // If true, exit method
                 }
 
                 // Update the text area with deleted items
@@ -791,61 +760,44 @@ public class GUIComponentInitializer {
                 // Perform actions based on user choice
                 switch (choice) {
                     case JOptionPane.YES_OPTION: // Restore one item
-                        String input = JOptionPane.showInputDialog(null,
+                        String itemNumberString = JOptionPane.showInputDialog(null,
                                 "Enter the item number to restore:");
-
-                        // Check if user clicked cancel or closed the dialog
-                        if (input == null) {
-                            return; // Exit method
-                        }
-
-                        // Trim and normalize whitespace in the input
-                        input = input.replaceAll("\\s+", " ").trim();
-
-                        // Trim input and check if empty
-                        if (input.isEmpty()) {
-                            // Show an error message if the new item name is empty
-                            JOptionPane.showMessageDialog(null,
-                                    "Item Number cannot be empty!",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-                            return; // Exit mthod
-                        }
-
-                        // Check if the input is numbers
-                        if (!input.matches("\\d+")) {
-                            // Show an error message if item number is not numbers
-                            JOptionPane.showMessageDialog(null,
-                                    "The item number must contain only numbers!",
-                                    "Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            return; // Exit method
-                        }
-
                         try {
+
+                            // Validate if user selected 'cancel' or closed the dialog
+                            if (DataValidator.isInputNull(itemNumberString)) {
+                                return; // If true, exit method
+                            }
+
+                            // Trim and normalize whitespace in the input
+                            itemNumberString = itemNumberString.replaceAll("\\s+", " ").trim();
+
+                            if (DataValidator.isInputEmpty(itemNumberString)) {
+                                return; // If true, exit method
+                            }
+
+                            // Validate the quantity input (ex: 1, 5, 100, 5000)
+                            if (!DataValidator.isQuantityInputValid(itemNumberString)) {
+                                return; // If false, exit method
+                            }
+
                             // Parse input to integer
-                            int itemNumberToRestore = Integer.parseInt(input);
+                            int itemNumber = Integer.parseInt(itemNumberString);
 
                             // Create variablea
-                            boolean itemFound = false;
                             InventoryItem itemToRestore = null;
 
-                            // Search through list to find matching IDs
+                            // Iterate thorugh list and find the item to restore, if not found, exit loops
                             for (InventoryItem item : deletedItemsList) {
-                                if (item.getItemNumber() == itemNumberToRestore) {
+                                if (item.getItemNumber() == itemNumber) {
                                     itemToRestore = item;
-                                    itemFound = true;
-                                    break;
+                                    break; // selectedItem will remain 'null' if the item number is not found
                                 }
                             }
 
-                            // If the item number does not exist
-                            if (!itemFound) {
-
-                                JOptionPane.showMessageDialog(null,
-                                        "Item number " + itemNumberToRestore
-                                                + " does not exist.",
-                                        "Restore Failed", JOptionPane.ERROR_MESSAGE);
-                                return; // Exit method
+                            // Validate if the item number exists
+                            if (!DataValidator.isItemNumberFound(itemToRestore, itemNumber)) {
+                                return; // If false, exit the method
                             }
 
                             // Remove the item from deleted items list

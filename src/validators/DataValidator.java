@@ -52,7 +52,13 @@ public class DataValidator {
         }
     }
 
-    // Method to check if user selected 'cancel' or closed the dialog
+    /**
+     * Method to validate if user selected 'cancel' or closed the dialog
+     * 
+     * @param input - the input to validate
+     * @return - true if the user selected 'cancel' or closed the dialog,
+     *         false if not
+     */
     public static boolean isInputNull(String input) {
         if (input == null) {
             return true; // Exit Method
@@ -61,7 +67,12 @@ public class DataValidator {
         }
     }
 
-    // Method to validate if input is empty
+    /**
+     * Method to validate if input is empty
+     * 
+     * @param inputString - the input to validate
+     * @return - true if the input is empty, false if not
+     */
     public static boolean isInputEmpty(String inputString) {
         if (inputString.isEmpty()) {
             JOptionPane.showMessageDialog(null,
@@ -85,7 +96,7 @@ public class DataValidator {
             return true; // Continue Method
         } else {
             JOptionPane.showMessageDialog(null,
-                    "Quantity must contain only numbers! (ex: 1, 2, 5, 10, 50, 100)",
+                    "Quantity input must contain only numbers! (ex: 1, 2, 5, 10, 50, 100)",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return false; // Exit Method
@@ -93,7 +104,8 @@ public class DataValidator {
     }
 
     /**
-     * Checks if the new item name contains only valid characters (A-Z, a-z.
+     * Method to validate if the new item name contains only valid characters (A-Z,
+     * a-z.
      * (0-9))
      * 
      * @param itemName The new item name
