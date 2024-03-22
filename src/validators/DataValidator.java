@@ -34,17 +34,21 @@ public class DataValidator {
         }
     }
 
-    // Method to validate the list of updated items
+    /**
+     * Method to validate if CSV file is empty
+     * 
+     * @param list - the list from the CSV file
+     * @return - true if the list frpm the CSV file is empty, false if not
+     */
     public static boolean isCSVFileEmpty(List<InventoryItem> list) {
-
         // Check if list is empty, if so, display message and exit method
         if (list.isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "No items found.",
                     "Information", JOptionPane.INFORMATION_MESSAGE);
-            return false; // Validation failed
+            return true; // Exit Method
         } else {
-            return true; // Validation passed
+            return false; // Continue method
         }
     }
 

@@ -245,8 +245,8 @@ public class GUIComponentInitializer {
 
                 try {
                     // Validate if the list is empty
-                    if (!DataValidator.isCSVFileEmpty(list)) {
-                        return; // If false, exit method
+                    if (DataValidator.isCSVFileEmpty(list)) {
+                        return; // If true, exit method
                     }
 
                     // Update inventory text area to display current inventory
@@ -506,8 +506,8 @@ public class GUIComponentInitializer {
 
                 try {
                     // Validate if the list is empty
-                    if (!DataValidator.isCSVFileEmpty(list)) {
-                        return; // If false, exit method
+                    if (DataValidator.isCSVFileEmpty(list)) {
+                        return; // If true, exit method
                     }
 
                     // Update inventory text area to display current inventory
@@ -926,11 +926,9 @@ public class GUIComponentInitializer {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // check if the list is empty, exit method
-                if (inventoryItemsList.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No items to generate report for!", "Information",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
+                // Validate if the list is empty
+                if (DataValidator.isCSVFileEmpty(itemsList)) {
+                    return; // If true, exit method
                 }
 
                 // Update inventory text area to display current inventory
