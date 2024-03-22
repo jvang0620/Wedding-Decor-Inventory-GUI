@@ -23,9 +23,8 @@ import src.util.PromptForUpdateConfirmation;
 import src.util.RandomNumberGenerator;
 import src.util.UpdateDeletedItemsTextArea;
 import src.util.UpdateInventoryTextArea;
-import src.util.ValidatingItemNumber;
 import src.validators.DataValidator;
-import src.validators.DataValidatorForUpdate;
+import src.validators.DataValidatorForUpdates;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -135,7 +134,7 @@ public class GUIComponentInitializer {
                 itemName = itemName.replaceAll("\\s+", " ").trim();
 
                 // Validate the user input is not empty and contains valid characters
-                if (!DataValidator.isValidItemNumberForCreate(itemName)) {
+                if (!DataValidator.isValidItemNameForCreate(itemName)) {
                     return; // Exit method if validation fails
                 }
 
@@ -234,31 +233,36 @@ public class GUIComponentInitializer {
                 // Read from inventory csv file
                 List<InventoryItem> list = CSVHandler.readItemsFromInventoryCSVFile();
 
-                // Check if the list is empty, if so, exit method
-                if (!DataValidatorForUpdate.validateUpdatedItemsList(list)) {
-                    return;
-                }
-
-                // Update inventory text area to display current inventory
-                UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
-
-                // Prompt user to enter the item number for the item to be updated
-                String itemNumberStr = JOptionPane.showInputDialog(null, "Enter Item Number to Update:");
-
-                // Check if user clicked cancel or closed the dialog, if so, exit method
-                if (DataValidator.isInputNull(itemNumberStr)) {
-                    return;
-                }
-
-                // Trim and normalize whitespace in the item Number String
-                itemNumberStr = itemNumberStr.replaceAll("\\s+", " ").trim();
-
-                // Validate the user input is not empty and contains valid characters
-                if (!DataValidatorForUpdate.isValidItemNumberForUpdate(itemNumberStr)) {
-                    return; // Exit method if validation fails
-                }
-
                 try {
+                    // Validate if the list is empty
+                    if (!DataValidatorForUpdates.validateUpdatedItemsList(list)) {
+                        return; // If false, exit method
+                    }
+
+                    // Update inventory text area to display current inventory
+                    UpdateInventoryTextArea.reloadTextArea(inventoryItemsList, inventoryTextArea);
+
+                    // Prompt user to enter the item number for the item to be updated
+                    String itemNumberStr = JOptionPane.showInputDialog(null, "Enter Item Number to Update:");
+
+                    // Validate if user clicked cancel or closed the dialog
+                    if (DataValidator.isInputNull(itemNumberStr)) {
+                        return; // If so, exit method
+                    }
+
+                    // Trim and normalize whitespace in the item Number String
+                    itemNumberStr = itemNumberStr.replaceAll("\\s+", " ").trim();
+
+                    // Validate the user input is not empty
+                    if (DataValidator.isInputEmpty(itemNumberStr)) {
+                        return; // If true, exit method
+                    }
+
+                    // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
+                    if (!DataValidator.isQuantityValid(itemNumberStr)) {
+                        return; // If false, exit method
+                    }
+
                     // Parse the item number from the user input
                     int itemNumberToUpdate = Integer.parseInt(itemNumberStr);
 
@@ -269,14 +273,13 @@ public class GUIComponentInitializer {
                     for (InventoryItem item : inventoryItemsList) {
                         if (item.getItemNumber() == itemNumberToUpdate) {
                             selectedItem = item;
-                            break;
+                            break; // selectedItem will remain 'null' if the item number is not found
                         }
                     }
 
                     // Validate if the item number exists
-                    // If not, exit the method
                     if (!DataValidator.isItemNumberFound(selectedItem, itemNumberToUpdate)) {
-                        return;
+                        return; // If not, exit the method
                     }
 
                     // Display a dialog to select the field to update
@@ -288,7 +291,7 @@ public class GUIComponentInitializer {
                             "Update Item", JOptionPane.QUESTION_MESSAGE, null, updateOptions,
                             updateOptions[0]);
 
-                    // Check if a field to update is selected
+                    // Validate if a field to update is selected
                     if (selectedOption != null) {
                         switch (selectedOption) {
                             case "Item Number":
@@ -298,36 +301,42 @@ public class GUIComponentInitializer {
                                         selectedItem.getItemNumber());
 
                                 try {
-                                    // Validate if user clicked cancel or closed the dialog, if so, exit method
+                                    // Validate if user clicked cancel or closed the dialog
                                     if (DataValidator.isInputNull(newItemNumberStr)) {
-                                        return;
+                                        return; // If true, exit method
                                     }
 
                                     // Trim and normalize whitespace in the newItemNumberStr
                                     newItemNumberStr = newItemNumberStr.replaceAll("\\s+", " ").trim();
 
-                                    // Validate the user input is not empty and contains valid characters
-                                    if (!DataValidatorForUpdate.isValidItemNumberForUpdate(newItemNumberStr)) {
-                                        return; // Exit method if validation fails
+                                    // Validate the user input is not empty
+                                    if (DataValidator.isInputEmpty(newItemNumberStr)) {
+                                        return; // If true, exit method
+                                    }
+
+                                    // Validate the user input contains valid characters (ex: 1, 5, 100, 5000)
+                                    if (!DataValidator.isQuantityValid(newItemNumberStr)) {
+                                        return; // If false, exit method
                                     }
 
                                     // Parse the new item number
                                     int newUpdatedItemNumber = Integer.parseInt(newItemNumberStr);
 
                                     // Validate that the new updated item number is valid
-                                    if (!DataValidatorForUpdate.isValidItemNumber(selectedItem.getItemType(),
+                                    if (!DataValidatorForUpdates.isUpdatedItemNumberValid(selectedItem.getItemType(),
                                             newUpdatedItemNumber)) {
                                         return; // Exit method if validation fails
                                     }
 
                                     // Validate if the new updated item number is a duplicate
-                                    if (DataValidatorForUpdate.isDuplicateItemNumber(selectedItem,
+                                    if (DataValidatorForUpdates.isUpdatedItemNumberDuplicate(selectedItem,
                                             newUpdatedItemNumber)) {
                                         return; // Exit method if validation passes
                                     }
 
                                     // Validate if the new updated item number is an existing item number
-                                    if (DataValidatorForUpdate.isExistingItemNumber(itemsList, newUpdatedItemNumber)) {
+                                    if (DataValidatorForUpdates.doesUpdatedItemNumberExist(itemsList,
+                                            newUpdatedItemNumber)) {
                                         return; // Exit method if validation passes
                                     }
 
@@ -360,7 +369,7 @@ public class GUIComponentInitializer {
                                     }
 
                                     // Checks if the new updated item type is the same as the current item type
-                                    if (DataValidatorForUpdate.isSameItemType(selectedItem, newType)) {
+                                    if (DataValidatorForUpdates.isSameItemType(selectedItem, newType)) {
                                         return; // Exit method
                                     }
 
@@ -390,17 +399,17 @@ public class GUIComponentInitializer {
                                     newUpdatedItemName = newUpdatedItemName.replaceAll("\\s+", " ").trim();
 
                                     // Validate the user input is not empty, if so, exit method
-                                    if (DataValidator.isFormEmpty(newUpdatedItemName)) {
+                                    if (DataValidator.isInputEmpty(newUpdatedItemName)) {
                                         return;
                                     }
 
                                     // Check if the new updated item name is the same as the current item name
-                                    if (DataValidatorForUpdate.isSameItemName(selectedItem, newUpdatedItemName)) {
+                                    if (DataValidatorForUpdates.isSameItemName(selectedItem, newUpdatedItemName)) {
                                         return; // If so, exit method
                                     }
 
                                     // Validate if the new updated item name contains only valid characters
-                                    if (!DataValidatorForUpdate.isValidItemName(newUpdatedItemName)) {
+                                    if (!DataValidatorForUpdates.isValidItemName(newUpdatedItemName)) {
                                         return; // If so, exit method
                                     }
 
@@ -432,7 +441,7 @@ public class GUIComponentInitializer {
                                     newQuantityStr = newQuantityStr.replaceAll("\\s+", " ").trim();
 
                                     // Validate the user input is not empty
-                                    if (DataValidator.isFormEmpty(newQuantityStr)) {
+                                    if (DataValidator.isInputEmpty(newQuantityStr)) {
                                         return; // if true, exit method
                                     }
 
@@ -445,7 +454,7 @@ public class GUIComponentInitializer {
                                     int newQuantity = Integer.parseInt(newQuantityStr);
 
                                     // Validate if new quantity is the same as the current quantity;
-                                    if (DataValidatorForUpdate.isSameQuantity(selectedItem, newQuantity)) {
+                                    if (DataValidatorForUpdates.isSameQuantity(selectedItem, newQuantity)) {
                                         return; // if true, exit method
                                     }
 

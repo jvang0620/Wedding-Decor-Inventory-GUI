@@ -43,10 +43,10 @@ public class DataValidator {
         }
     }
 
-    public static boolean isFormEmpty(String inputString) {
+    public static boolean isInputEmpty(String inputString) {
         if (inputString.isEmpty()) {
             JOptionPane.showMessageDialog(null,
-                    "Empty input! All fields are required!",
+                    "Empty input! Please fill out required field.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             return true; // Exit Method
@@ -74,7 +74,7 @@ public class DataValidator {
     }
 
     // Method to validate the user input
-    public static boolean isValidItemNumberForCreate(String itemNumberStr) {
+    public static boolean isValidItemNameForCreate(String itemNumberStr) {
 
         // Check if empty
         if (itemNumberStr.isEmpty()) {

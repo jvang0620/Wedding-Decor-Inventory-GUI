@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 import src.model.InventoryItem;
 
-public class DataValidatorForUpdate {
+public class DataValidatorForUpdates {
 
     // Method to validate the list of updated items
     public static boolean validateUpdatedItemsList(List<InventoryItem> updatedItems) {
@@ -19,35 +19,6 @@ public class DataValidatorForUpdate {
         } else {
             return true; // Validation passed
         }
-    }
-
-    /**
-     * Validates the format of the item number for update.
-     * 
-     * @param itemNumberStr The string representation of the item number.
-     * @return True if the item number format is valid, otherwise false.
-     */
-    public static boolean isValidItemNumberForUpdate(String itemNumberStr) {
-
-        // Check if the input string is empty
-        if (itemNumberStr.isEmpty()) {
-            // Display an error message if the item number is empty
-            JOptionPane.showMessageDialog(null,
-                    "Item Number cannot be empty!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return false; // Validation failed
-        }
-
-        // Check if the input string contains only digits
-        if (!itemNumberStr.matches("\\d+")) {
-            // Display an error message if the input contains non-numeric characters
-            JOptionPane.showMessageDialog(null,
-                    "Quantity must contain only numbers! (ex: 1, 2, 5, 10, 50, 100",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return false; // Validation failed
-        }
-
-        return true; // Exit method
     }
 
     /**
@@ -83,7 +54,7 @@ public class DataValidatorForUpdate {
      * @return True if the item number is valid for the given item type, false
      *         otherwise.
      */
-    public static boolean isValidItemNumber(String itemType, int itemNumber) {
+    public static boolean isUpdatedItemNumberValid(String itemType, int itemNumber) {
         switch (itemType) {
             case "Vases":
                 if (itemNumber >= 100 && itemNumber < 200) {
@@ -141,7 +112,7 @@ public class DataValidatorForUpdate {
      * @return True if the new updated item number is a duplicate of the current
      *         item, otherwise false.
      */
-    public static boolean isDuplicateItemNumber(InventoryItem selectedItem, int newUpdatedItemNumber) {
+    public static boolean isUpdatedItemNumberDuplicate(InventoryItem selectedItem, int newUpdatedItemNumber) {
         // Check if the new item number created is the same as the current one
         if (newUpdatedItemNumber == selectedItem.getItemNumber()) {
             JOptionPane.showMessageDialog(null,
@@ -160,7 +131,7 @@ public class DataValidatorForUpdate {
      * @param inventoryItemsList   The list of inventory items
      * @param newUpdatedItemNumber The new updated item number
      */
-    public static boolean isExistingItemNumber(List<InventoryItem> inventoryItemsList, int newUpdatedItemNumber) {
+    public static boolean doesUpdatedItemNumberExist(List<InventoryItem> inventoryItemsList, int newUpdatedItemNumber) {
         for (InventoryItem item : inventoryItemsList) {
             if (item.getItemNumber() == newUpdatedItemNumber) {
                 JOptionPane.showMessageDialog(null,
