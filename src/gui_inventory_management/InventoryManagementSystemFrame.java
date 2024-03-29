@@ -7,6 +7,8 @@ import src.model.InventoryItem;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class InventoryManagementSystemFrame extends JFrame {
@@ -43,6 +45,13 @@ public class InventoryManagementSystemFrame extends JFrame {
 
         // Make the frame visible
         setVisible(true);
+
+        // Create an Image Icon
+        ImageIcon GUI_Image_Icon = new ImageIcon("imgs/GUI-Img-Icon/inventory-system.png");
+
+        // Change icon of frame
+        setIconImage(GUI_Image_Icon.getImage());
+
     }
 
 }
