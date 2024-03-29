@@ -1,7 +1,7 @@
 # Wedding Decors Inventory Management System
 
 <div style="text-align: center;">
-    <img src="imgs/GUI.jpg" alt="GUI" width="800">
+    <img src="imgs/App-Img/App-Img.jpg" alt="GUI" width="800">
 </div>
 
 ### Table of Contents
@@ -72,7 +72,7 @@ In addition to the core features, our Wedding Decor Inventory Management System 
 ### UML Diagram
 
 <div style="text-align: center;">
-    <img src="imgs/urm_diagram.jpg" alt="UML-Diagram" width="800">
+    <img src="imgs/Diagram-Imgs/urm_diagram.jpg" alt="UML-Diagram" width="800">
 </div>
 
 ##### Use case descriptions list:
@@ -90,7 +90,7 @@ In addition to the core features, our Wedding Decor Inventory Management System 
 ### Class Diagram
 
 <div style="text-align: center;">
-    <img src="imgs/class_diagram.jpg" alt="UML-Diagram" width="800">
+    <img src="imgs/Diagram-Imgs/class_diagram.jpg" alt="UML-Diagram" width="800">
 </div>
 
 ##### Overview of Class Diagram:
@@ -126,11 +126,11 @@ In addition to the core features, our Wedding Decor Inventory Management System 
 ### Activity Diagram
 
 <div style="text-align: center;">
-    <img src="imgs/activity_diagram_pic_1.JPG" alt="UML-Diagram" width="800">
+    <img src="imgs/Diagram-Imgs/activity_diagram_pic_1.JPG" alt="UML-Diagram" width="800">
 </div>
 
 <div style="text-align: center;">
-    <img src="imgs/activity_diagram_pic_2.JPG" alt="UML-Diagram" width="800">
+    <img src="imgs/Diagram-Imgs/activity_diagram_pic_2.JPG" alt="UML-Diagram" width="800">
 </div>
 
 ##### Written Descriptions:
